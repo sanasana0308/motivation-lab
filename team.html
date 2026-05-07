@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>師資陣容 — 激勵研究社</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #fdf8f2;
+    --accent: #c0392b;
+    --gold: #d4a843;
+    --warm: #e8ddd0;
+    --muted: #7a6f65;
+    --border: #d4c9bc;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans TC', sans-serif;
+    font-weight:300;
+    line-height:1.8;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(253,248,242,.92);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:0 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px;
+  }
+  .nav-logo {
+    font-family:'Noto Serif TC',serif;
+    font-weight:700; font-size:16px; letter-spacing:.08em;
+    color:var(--ink); text-decoration:none;
+  }
+  .nav-logo span { color:var(--accent); }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a {
+    font-size:13px; letter-spacing:.06em; color:var(--muted);
+    text-decoration:none; transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--accent); }
+  .nav-back {
+    font-size:13px; color:var(--muted); text-decoration:none;
+    letter-spacing:.06em; transition:color .2s;
+    display:flex; align-items:center; gap:6px;
+  }
+  .nav-back:hover { color:var(--ink); }
+
+  /* HERO — 猜謎區 */
+  #guess-section {
+    min-height:100vh;
+    display:grid; grid-template-columns:1fr 1fr;
+    padding-top:60px;
+    overflow:hidden;
+  }
+  .guess-left {
+    display:flex; flex-direction:column; justify-content:center;
+    padding:80px 60px 80px 80px;
+  }
+  .section-label {
+    font-size:11px; letter-spacing:.16em; color:var(--gold);
+    text-transform:uppercase; margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-label::after {
+    content:''; flex:1; max-width:40px; height:1px; background:var(--gold);
+  }
+  .guess-left h1 {
+    font-family:'Noto Serif TC',serif;
+    font-size:clamp(32px,4vw,48px);
+    font-weight:700; line-height:1.25;
+    color:var(--paper); margin-bottom:12px;
+  }
+  .guess-left h1 em { color:var(--gold); font-style:normal; }
+  .guess-desc {
+    font-size:14px; color:rgba(253,248,242,.55);
+    line-height:1.9; margin-bottom:32px; max-width:380px;
+  }
+
+  /* 猜謎選項 */
+  .guess-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:10px; max-width:400px; margin-bottom:16px;
+  }
+  .g-btn {
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:4px;
+    padding:14px 16px;
+    color:var(--paper);
+    font-size:13px; font-family:'Noto Sans TC',sans-serif;
+    cursor:pointer;
+    transition:background .15s, border-color .15s;
+    text-align:left; line-height:1.5;
+  }
+  .g-btn small { font-size:11px; opacity:.5; display:block; margin-top:3px; }
+  .g-btn:hover { background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.35); }
+  .g-btn.wrong {
+    background:rgba(180,40,40,.2); border-color:rgba(220,80,80,.35);
+    color:rgba(255,160,160,.75); pointer-events:none;
+  }
+  .g-btn.correct {
+    background:rgba(60,160,90,.2); border-color:rgba(80,200,100,.4);
+    color:rgba(150,255,160,.9); pointer-events:none;
+  }
+
+  #guess-msg {
+    display:none; margin-bottom:16px;
+    padding:12px 16px; border-radius:4px;
+    font-size:13px; line-height:1.7;
+    background:rgba(212,168,67,.12);
+    border:1px solid rgba(212,168,67,.3);
+    color:rgba(253,248,242,.85);
+    max-width:400px;
+  }
+
+  #show-team-btn {
+    display:none;
+    background:var(--gold); color:var(--ink);
+    border:none; border-radius:2px;
+    padding:13px 28px; font-size:14px; letter-spacing:.04em;
+    font-family:'Noto Sans TC',sans-serif; font-weight:500;
+    cursor:pointer; transition:opacity .2s;
+  }
+  #show-team-btn:hover { opacity:.85; }
+
+  /* 右側海報 */
+  .guess-right {
+    position:relative; overflow:hidden;
+    background:var(--ink);
+  }
+  .guess-right img {
+    width:100%; height:100%;
+    object-fit:cover; object-position:center top;
+    opacity:.65;
+  }
+  .guess-right-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to right, var(--ink) 0%, transparent 45%);
+  }
+  .guess-right-badge {
+    position:absolute; bottom:40px; left:40px;
+    background:rgba(26,20,16,.88);
+    border:1px solid var(--gold);
+    border-radius:4px; padding:14px 18px;
+    font-size:12px; line-height:1.7; max-width:200px;
+    color:rgba(253,248,242,.8);
+  }
+  .guess-right-badge strong {
+    color:var(--gold); display:block; margin-bottom:4px; font-size:13px;
+  }
+
+  /* 整個猜謎 section 的深色背景 */
+  #guess-section { background:var(--ink); }
+
+  /* ── TEAM SECTION ── */
+  #team-section {
+    display:none;
+    padding:90px 80px;
+    background:var(--paper);
+    animation:fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .team-label {
+    font-size:11px; letter-spacing:.16em; color:var(--accent);
+    text-transform:uppercase; margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .team-label::after { content:''; flex:1; max-width:40px; height:1px; background:var(--accent); }
+
+  .team-heading {
+    font-family:'Noto Serif TC',serif;
+    font-size:clamp(26px,3vw,38px); font-weight:700;
+    line-height:1.3; margin-bottom:12px;
+  }
+  .team-lead {
+    font-size:15px; color:var(--muted);
+    max-width:560px; line-height:1.9; margin-bottom:56px;
+  }
+
+  /* 海報 + 卡片並排 */
+  .team-body {
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:52px;
+    align-items:start;
+  }
+
+  .team-poster img {
+    width:100%; border-radius:4px;
+    border:1px solid var(--border); display:block;
+  }
+  .team-poster p {
+    font-size:11px; color:var(--muted);
+    margin-top:8px; text-align:center; letter-spacing:.06em;
+  }
+
+  /* ★ 四張卡片整齊 2×2 ★ */
+  .teacher-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+
+  .t-card {
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:24px;
+    transition:border-color .2s;
+  }
+  .t-card:hover { border-color:#b0a598; }
+
+  .t-card.featured {
+    border:1.5px solid var(--gold);
+    position:relative;
+  }
+  .t-card.featured .featured-tag {
+    position:absolute; top:-1px; right:16px;
+    background:var(--gold); color:var(--ink);
+    font-size:10px; letter-spacing:.08em; font-weight:500;
+    padding:3px 12px; border-radius:0 0 4px 4px;
+  }
+
+  .t-avatar {
+    width:48px; height:48px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Noto Serif TC',serif; font-size:17px; font-weight:700;
+    margin-bottom:14px; flex-shrink:0;
+  }
+  .av-gold { background:#f5e9c4; color:#8a6a10; }
+  .av-teal { background:#d1ede4; color:#0f6e56; }
+  .av-pink { background:#fbe6ef; color:#993356; }
+  .av-blue { background:#d6e9f8; color:#185fa5; }
+
+  .t-name { font-size:16px; font-weight:500; margin-bottom:3px; }
+  .t-role {
+    font-size:11px; letter-spacing:.07em; color:var(--muted);
+    margin-bottom:12px; text-transform:uppercase;
+  }
+  .t-skills { display:flex; flex-direction:column; gap:5px; }
+  .t-skill {
+    display:flex; align-items:center; gap:7px;
+    font-size:13px; color:var(--muted);
+  }
+  .t-dot {
+    width:5px; height:5px; border-radius:50%; flex-shrink:0;
+  }
+  .dot-gold { background:var(--gold); }
+  .dot-teal { background:#1d9e75; }
+  .dot-pink { background:#d4537e; }
+  .dot-blue { background:#378add; }
+
+  /* 底部 */
+  .team-footer {
+    margin-top:52px; padding-top:32px;
+    border-top:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:16px;
+  }
+  .team-footer p { font-size:13px; color:var(--muted); }
+  .reset-btn {
+    background:transparent; color:var(--muted);
+    border:1px solid var(--border); border-radius:2px;
+    padding:8px 20px; font-size:12px; letter-spacing:.04em;
+    font-family:'Noto Sans TC',sans-serif;
+    cursor:pointer; transition:border-color .2s, color .2s;
+  }
+  .reset-btn:hover { border-color:var(--ink); color:var(--ink); }
+
+  /* RWD */
+  @media (max-width:900px) {
+    nav { padding:0 20px; }
+    .nav-links { display:none; }
+    #guess-section { grid-template-columns:1fr; min-height:auto; }
+    .guess-left { padding:80px 24px 48px; }
+    .guess-right { height:280px; }
+    #team-section { padding:64px 24px; }
+    .team-body { grid-template-columns:1fr; }
+    .teacher-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">激勵<span>研究社</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#highlights">活動亮點</a></li>
+    <li><a href="index.html#about">計畫內容</a></li>
+    <li><a href="index.html#workshops">工作坊</a></li>
+    <li><a href="index.html#digital">數位系統</a></li>
+    <li><a href="index.html#register">立即報名</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">← 回首頁</a>
+</nav>
+
+<!-- 猜猜我是誰 -->
+<section id="guess-section">
+
+  <div class="guess-left">
+    <div class="section-label">師資陣容</div>
+    <h1>猜猜<em>我是誰</em>？</h1>
+    <p class="guess-desc">
+      海報中這位健壯的身影，是我們社群的哪位老師？<br>
+      選對了才能認識完整師資陣容！
+    </p>
+
+    <div class="guess-grid" id="guess-grid">
+      <button class="g-btn" onclick="doGuess(this,false)">
+        🧘 蘇于瑄老師<small>哈達瑜珈・療癒伸展</small>
+      </button>
+      <button class="g-btn" onclick="doGuess(this,false)">
+        🏋️ 陳育詮老師<small>重量訓練・體態雕塑</small>
+      </button>
+      <button class="g-btn" onclick="doGuess(this,false)">
+        🌊 張心瑋老師<small>流動瑜珈・徒手訓練</small>
+      </button>
+      <button class="g-btn" onclick="doGuess(this,true)">
+        ⚡ 周立德老師<small>重量訓練・有氧肌力</small>
+      </button>
+    </div>
+
+    <div id="guess-msg"></div>
+    <button id="show-team-btn" onclick="showTeam()">認識完整師資陣容 →</button>
+  </div>
+
+  <div class="guess-right">
+    <img src="poster-p1.jpg" alt="宣傳海報第一頁">
+    <div class="guess-right-overlay"></div>
+    <div class="guess-right-badge">
+      <strong>激勵研究社</strong>
+      Strength Within<br>
+      Train the body;<br>Empower the mind.
+    </div>
+  </div>
+
+</section>
+
+<!-- 師資陣容 -->
+<section id="team-section">
+
+  <div class="team-label">認識老師們</div>
+  <h2 class="team-heading">四位老師，一起陪你練。</h2>
+  <p class="team-lead">
+    從肌力訓練到瑜珈伸展，每一位都是身體力行的實踐者，也是陪你找回身心平衡的夥伴。
+  </p>
+
+  <div class="team-body">
+
+    <!-- 海報第二頁 -->
+    <div class="team-poster">
+      <img src="poster-p2.jpg" alt="師資陣容海報">
+      <p>激勵研究社・團隊陣容</p>
+    </div>
+
+    <!-- 師資卡片 2×2 -->
+    <div class="teacher-grid">
+
+      <!-- 陳育詮 -->
+      <div class="t-card">
+        <div class="t-avatar av-gold">育</div>
+        <div class="t-name">陳育詮 老師</div>
+        <div class="t-role">Weight Training · Body Composition</div>
+        <div class="t-skills">
+          <div class="t-skill"><span class="t-dot dot-gold"></span>重量訓練</div>
+          <div class="t-skill"><span class="t-dot dot-gold"></span>體態雕塑</div>
+        </div>
+      </div>
+
+      <!-- 周立德 ★ 特別標示 -->
+      <div class="t-card featured">
+        <span class="featured-tag">就是海報那位！</span>
+        <div class="t-avatar av-teal">立</div>
+        <div class="t-name">周立德 老師</div>
+        <div class="t-role">Weight Training · Cardio Strength</div>
+        <div class="t-skills">
+          <div class="t-skill"><span class="t-dot dot-teal"></span>重量訓練</div>
+          <div class="t-skill"><span class="t-dot dot-teal"></span>有氧肌力</div>
+        </div>
+      </div>
+
+      <!-- 蘇于瑄 -->
+      <div class="t-card">
+        <div class="t-avatar av-pink">瑄</div>
+        <div class="t-name">蘇于瑄 老師</div>
+        <div class="t-role">Hatha Yoga · Healing Stretch</div>
+        <div class="t-skills">
+          <div class="t-skill"><span class="t-dot dot-pink"></span>哈達瑜珈</div>
+          <div class="t-skill"><span class="t-dot dot-pink"></span>療癒伸展</div>
+        </div>
+      </div>
+
+      <!-- 張心瑋 -->
+      <div class="t-card">
+        <div class="t-avatar av-blue">心</div>
+        <div class="t-name">張心瑋 老師</div>
+        <div class="t-role">Flow Yoga · Bodyweight Training</div>
+        <div class="t-skills">
+          <div class="t-skill"><span class="t-dot dot-blue"></span>流動瑜珈</div>
+          <div class="t-skill"><span class="t-dot dot-blue"></span>徒手訓練</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="team-footer">
+    <p>Train the body; Empower the mind.　鍛鍊身體，賦能心靈。</p>
+    <button class="reset-btn" onclick="resetGuess()">↩ 重新猜一次</button>
+  </div>
+
+</section>
+
+<script>
+  var attempts = 0;
+
+  function doGuess(btn, correct) {
+    attempts++;
+    var msg = document.getElementById('guess-msg');
+    msg.style.display = 'block';
+
+    if (correct) {
+      btn.classList.add('correct');
+      document.querySelectorAll('.g-btn:not(.correct)').forEach(function(b) {
+        b.classList.add('wrong');
+      });
+      msg.innerHTML = attempts === 1
+        ? '🎉 第一次就猜中！就是 <strong style="color:var(--gold);">周立德老師</strong>，專精重量訓練與有氧肌力，活力滿點！'
+        : '🎉 答對了！就是 <strong style="color:var(--gold);">周立德老師</strong>！帶著大家從身體力量出發，找回身心平衡。';
+      document.getElementById('show-team-btn').style.display = 'inline-block';
+    } else {
+      btn.classList.add('wrong');
+      var hints = [
+        '答錯囉！再猜猜看，哪位老師的體態最符合海報？',
+        '還不對！提示：他專注於重量訓練與有氧肌力。',
+        '快猜到了！仔細看剩下的選項～'
+      ];
+      msg.innerHTML = hints[Math.min(attempts - 1, hints.length - 1)];
+    }
+  }
+
+  function showTeam() {
+    document.getElementById('guess-section').style.display = 'none';
+    var t = document.getElementById('team-section');
+    t.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetGuess() {
+    attempts = 0;
+    document.querySelectorAll('.g-btn').forEach(function(b) {
+      b.className = 'g-btn';
+    });
+    var msg = document.getElementById('guess-msg');
+    msg.style.display = 'none';
+    msg.innerHTML = '';
+    document.getElementById('show-team-btn').style.display = 'none';
+    document.getElementById('team-section').style.display = 'none';
+    document.getElementById('guess-section').style.display = 'grid';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

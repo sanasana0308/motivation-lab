@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>激勵研究社 — 肌力全開 × 身心舒展</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Inspire Research Circle — Strength Full-On × Mind-Body Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1410;
@@ -18,13 +18,12 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     line-height: 1.8;
     overflow-x: hidden;
@@ -41,17 +40,19 @@
     height: 60px;
   }
   .nav-logo {
-    font-family: 'Noto Serif TC', serif;
-    font-weight: 700; font-size: 16px; letter-spacing: .08em;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 15px; letter-spacing: .04em;
     color: var(--ink); text-decoration: none;
   }
   .nav-logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
   .nav-links a {
-    font-size: 13px; letter-spacing: .06em; color: var(--muted);
+    font-size: 13px; letter-spacing: .04em; color: var(--muted);
     text-decoration: none; transition: color .2s;
   }
   .nav-links a:hover { color: var(--accent); }
+
+  /* Language switcher */
   .lang-switch {
     display: flex; align-items: center; gap: 6px;
     font-size: 12px; letter-spacing: .08em;
@@ -65,10 +66,11 @@
     background: var(--ink); color: var(--paper);
   }
   .lang-switch a:not(.active):hover { color: var(--ink); }
+
   .nav-right { display: flex; align-items: center; gap: 20px; }
   .nav-cta {
     background: var(--accent); color: #fff;
-    font-size: 13px; letter-spacing: .06em;
+    font-size: 13px; letter-spacing: .04em;
     padding: 8px 20px; border-radius: 2px;
     text-decoration: none; transition: opacity .2s;
   }
@@ -95,27 +97,27 @@
     width: 28px; height: 1px; background: var(--accent);
   }
   h1 {
-    font-family: 'Noto Serif TC', serif;
-    font-size: clamp(36px, 4vw, 52px);
-    font-weight: 700; line-height: 1.25;
-    letter-spacing: .04em; margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 3.8vw, 50px);
+    font-weight: 700; line-height: 1.2;
+    letter-spacing: .01em; margin-bottom: 20px;
   }
-  h1 em { color: var(--accent); font-style: normal; }
+  h1 em { color: var(--accent); font-style: italic; }
   .hero-sub {
     font-size: 15px; color: var(--muted);
-    max-width: 400px; margin-bottom: 40px; line-height: 1.9;
+    max-width: 420px; margin-bottom: 40px; line-height: 1.9;
   }
   .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
   .btn-primary {
     background: var(--accent); color: #fff;
-    padding: 14px 32px; font-size: 14px; letter-spacing: .06em;
+    padding: 14px 32px; font-size: 14px; letter-spacing: .04em;
     border: none; border-radius: 2px; cursor: pointer;
     text-decoration: none; transition: opacity .2s;
   }
   .btn-primary:hover { opacity: .85; }
   .btn-outline {
     background: transparent; color: var(--ink);
-    padding: 14px 32px; font-size: 14px; letter-spacing: .06em;
+    padding: 14px 32px; font-size: 14px; letter-spacing: .04em;
     border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
     text-decoration: none; transition: border-color .2s, color .2s;
   }
@@ -126,11 +128,11 @@
     padding-top: 40px; border-top: 1px solid var(--border);
   }
   .stat-num {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 32px; font-weight: 700; color: var(--ink);
     line-height: 1;
   }
-  .stat-num span { font-size: 16px; color: var(--accent); }
+  .stat-num span { font-size: 14px; color: var(--accent); margin-left: 2px; }
   .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: .04em; }
 
   .hero-right {
@@ -154,7 +156,7 @@
     border-radius: 4px;
     padding: 16px 20px;
     font-size: 12px; line-height: 1.7;
-    max-width: 220px;
+    max-width: 230px;
   }
   .hero-badge strong { font-size: 14px; color: var(--accent); display: block; margin-bottom: 4px; }
 
@@ -169,7 +171,7 @@
   }
   .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); }
   h2 {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(26px, 3vw, 38px);
     font-weight: 700; line-height: 1.3; margin-bottom: 16px;
   }
@@ -194,23 +196,20 @@
     cursor: default;
   }
   .highlight-card:hover { background: rgba(255,255,255,.04); }
-  .highlight-icon {
-    font-size: 28px; margin-bottom: 20px;
-    display: block;
-  }
+  .highlight-icon { font-size: 28px; margin-bottom: 20px; display: block; }
   .highlight-card h3 {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 17px; font-weight: 600; margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; margin-bottom: 10px;
     color: var(--gold);
   }
   .highlight-card p { font-size: 14px; color: rgba(253,248,242,.65); line-height: 1.8; }
 
-  /* ── ABOUT / 計畫內容 ── */
+  /* ── ABOUT ── */
   #about { padding: 100px 80px; }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 56px; }
   .about-block h3 {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 18px; font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
     margin-bottom: 12px; padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
   }
@@ -237,7 +236,7 @@
   .workshop-item:hover { padding-left: 8px; }
   .workshop-item:first-child { border-top: 1px solid var(--border); }
   .workshop-num {
-    font-family: 'Noto Serif TC', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 28px; font-weight: 700; color: var(--border);
     line-height: 1;
   }
@@ -290,7 +289,7 @@
     padding: 28px; background: #fff;
   }
   .info-card-label { font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
-  .info-card-val { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 600; }
+  .info-card-val { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
   .info-card-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   /* ── REGISTER ── */
@@ -314,7 +313,7 @@
     padding: 12px 16px;
     color: #fff;
     font-size: 14px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     outline: none; transition: border-color .2s;
   }
   .form-group input::placeholder,
@@ -328,8 +327,8 @@
     background: #fff; color: var(--accent);
     border: none; border-radius: 2px;
     padding: 16px; font-size: 15px;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; letter-spacing: .06em;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500; letter-spacing: .04em;
     cursor: pointer; transition: opacity .2s;
     margin-top: 8px;
   }
@@ -377,130 +376,130 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">激勵<span>研究社</span></a>
+  <a href="#hero" class="nav-logo">Inspire<span> Circle</span></a>
   <ul class="nav-links">
-    <li><a href="#highlights">活動亮點</a></li>
-    <li><a href="#about">計畫內容</a></li>
-    <li><a href="#workshops">工作坊</a></li>
-    <li><a href="#digital">數位系統</a></li>
-    <li><a href="#info">時間對象</a></li>
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#workshops">Workshops</a></li>
+    <li><a href="#digital">Digital System</a></li>
+    <li><a href="#info">Details</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switch">
-      <a href="index.html" class="active">中文</a>
-      <a href="en/index.html">EN</a>
+      <a href="../index.html">中文</a>
+      <a href="index.html" class="active">EN</a>
     </div>
-    <a href="#register" class="nav-cta">立即報名</a>
+    <a href="#register" class="nav-cta">Register Now</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-    <div class="hero-tag">115學年教師增能社群</div>
-    <h1>肌力全開<br><em>×</em> 身心舒展</h1>
+    <div class="hero-tag">Academic Year 115 — Teacher PD Community</div>
+    <h1>Strength<br>Full-On <em>×</em><br>Mind-Body Wellness</h1>
     <p class="hero-sub">
-      激勵人心，不如肌力柔軟力全開！<br>
-      照顧好自己，是教育最美的延續。<br>
-      社群結合身體運動與數位融入，好好照顧身體與療癒心情。
+      Inspire yourself from the inside out.<br>
+      Taking care of yourself is the most beautiful extension of education.<br>
+      We combine physical training with digital integration — nurturing the body and healing the mind.
     </p>
     <div class="hero-btns">
-      <a href="#register" class="btn-primary">立即報名</a>
-      <a href="#about" class="btn-outline">了解更多</a>
+      <a href="#register" class="btn-primary">Register Now</a>
+      <a href="#about" class="btn-outline">Learn More</a>
     </div>
     <div class="hero-stats">
       <div>
-        <div class="stat-num">8<span>次</span></div>
-        <div class="stat-label">增能工作坊</div>
+        <div class="stat-num">8<span> sessions</span></div>
+        <div class="stat-label">Workshop Series</div>
       </div>
       <div>
-        <div class="stat-num">6<span>支</span></div>
-        <div class="stat-label">數位教學影片</div>
+        <div class="stat-num">6<span> videos</span></div>
+        <div class="stat-label">Digital Teaching Films</div>
       </div>
       <div>
-        <div class="stat-num">1<span>套</span></div>
-        <div class="stat-label">AI 情緒反饋系統</div>
+        <div class="stat-num">1<span> system</span></div>
+        <div class="stat-label">AI Emotion Feedback</div>
       </div>
     </div>
   </div>
   <div class="hero-right">
-    <img src="poster.png" alt="激勵研究社宣傳海報">
+    <img src="../poster.png" alt="Inspire Research Circle Poster">
     <div class="hero-overlay"></div>
     <div class="hero-badge">
-      <strong>身心全人 × SEL</strong>
-      肌力訓練 · 正念伸展 · 情緒覺察 · 數位歷程
+      <strong>Whole-Person Wellness × SEL</strong>
+      Strength Training · Mindful Stretching · Emotional Awareness · Digital Portfolio
     </div>
   </div>
 </section>
 
 <!-- HIGHLIGHTS -->
 <section id="highlights">
-  <div class="section-label">活動亮點搶先看</div>
-  <h2>四大核心體驗</h2>
-  <p class="lead">每一次相聚，都是給自己的禮物。身體、情緒、夥伴、數據，缺一不可。</p>
+  <div class="section-label">Program Highlights</div>
+  <h2>Four Core Experiences</h2>
+  <p class="lead">Every gathering is a gift to yourself. Body, emotions, community, and data — each one matters.</p>
 
   <div class="highlights-grid reveal">
     <div class="highlight-card">
       <span class="highlight-icon">🏋️</span>
-      <h3>8 次增能實作與共備</h3>
-      <p>動態肌力訓練與正念伸展，有效緩解久坐與教學產生的肩頸僵硬，找回身體活力。</p>
+      <h3>8 Hands-On Workshops</h3>
+      <p>Dynamic strength training and mindful stretching to effectively relieve neck and shoulder stiffness from prolonged sitting and teaching — reclaim your physical vitality.</p>
     </div>
     <div class="highlight-card">
       <span class="highlight-icon">🎙️</span>
-      <h3>外聘專家身心講座</h3>
-      <p>邀請專業講師分享身體釋放與心理健康管理策略，帶來跨域視野與實踐工具。</p>
+      <h3>Expert Mind-Body Lecture</h3>
+      <p>A guest specialist shares strategies for physical release and mental health management, offering cross-disciplinary perspectives and practical tools.</p>
     </div>
     <div class="highlight-card">
       <span class="highlight-icon">🤝</span>
-      <h3>數位平臺與智慧評量</h3>
-      <p>運用數位工具蒐集學習歷程，省去繁瑣人工統計，加速成效分析，落實課程滾動修正。</p>
+      <h3>Digital Platform & Smart Assessment</h3>
+      <p>Digital tools collect learning portfolios automatically — eliminating tedious manual tracking and accelerating impact analysis for ongoing curriculum refinement.</p>
     </div>
     <div class="highlight-card">
       <span class="highlight-icon">📊</span>
-      <h3>數位量化情緒日誌</h3>
-      <p>運用 AI 與 GAS 自動化系統，關照情緒並獲得專屬數據反饋，每次練習都有數據印證成長。</p>
+      <h3>Digital Emotion Journal</h3>
+      <p>An AI + GAS automated system tracks emotional states and delivers personalized data feedback — every session leaves a measurable imprint of your growth.</p>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">計畫內容</div>
-  <h2>激勵（肌力）研究社</h2>
-  <p class="lead">以人體力學與心理學為雙軸，整合身體覺察與情緒素養，打造全方位的教師增能平台。</p>
+  <div class="section-label">Program Overview</div>
+  <h2>Inspire (Strength) Research Circle</h2>
+  <p class="lead">Using biomechanics and psychology as twin axes, we integrate body awareness with emotional literacy to build a holistic teacher development platform.</p>
 
   <div class="about-grid reveal">
     <div>
       <div class="about-block" style="margin-bottom:36px;">
-        <h3>核心理念</h3>
-        <p>本社群以「激勵（肌力）研究」為核心，結合身體鍛鍊與社會情緒學習（SEL），協助教師在繁忙的教學生活中，透過規律的身體訓練與正念實踐，建立個人的身心平衡機制，並將此理念延伸至課堂，提升學生的學習成效。</p>
+        <h3>Core Philosophy</h3>
+        <p>This community is built around "strength-based inspiration," combining physical training with Social-Emotional Learning (SEL). We help teachers — amid the demands of their professional lives — establish personal mind-body balance through regular physical training and mindfulness practice, then carry that ethos into the classroom to enhance student learning outcomes.</p>
       </div>
       <div class="about-block">
-        <h3>三大產出</h3>
+        <h3>Three Key Deliverables</h3>
         <ul>
-          <li>教師社群增能工作坊 8 場（內聘 7 場、外聘 1 場）</li>
-          <li>數位教學影片 6 支，提供線上共備與自主練習，打破空間限制</li>
-          <li>「SEL 數位練習歷程與情緒反饋系統」1 套</li>
+          <li>8 teacher community workshops (7 internal facilitators, 1 external expert)</li>
+          <li>6 digital teaching videos for online co-learning and independent practice</li>
+          <li>1 complete "SEL Digital Practice Portfolio & Emotion Feedback System"</li>
         </ul>
         <div class="tag-list">
           <span class="tag">SEL</span>
-          <span class="tag">肌力訓練</span>
-          <span class="tag">正念伸展</span>
-          <span class="tag">數位素養</span>
-          <span class="tag">壓力管理</span>
-          <span class="tag">AI 協作</span>
+          <span class="tag">Strength Training</span>
+          <span class="tag">Mindful Stretching</span>
+          <span class="tag">Digital Literacy</span>
+          <span class="tag">Stress Management</span>
+          <span class="tag">AI Collaboration</span>
         </div>
       </div>
     </div>
     <div>
-      <div class="about-block" style="margin-bottom:36px;">
-        <h3>四大實施面向</h3>
+      <div class="about-block">
+        <h3>Four Implementation Dimensions</h3>
         <ul>
-          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(1) SEL 身心覺察與調節</strong><br>透過輔具訓練與呼吸引導，在運動中培養專注當下的能力，達成身心平衡與壓力管理。</li>
-          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(2) 數位影音教材產製</strong><br>錄製 6 支教學影片，打破空間限制，提供線上共備與練習。</li>
-          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(3) AI 融入教學設計，數位歷程與自動反饋系統</strong><br>開發「SEL 數位練習歷程與情緒反饋系統」，示範 AI 融入教學評量的實踐模式。以 GAS 自動運算，透過 Gmail 寄送個人化情緒分析與進度報告。</li>
-          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(4) 數位工具與學習評量，協助課程滾動修正</strong><br>導入數位工具管理學習歷程，蒐集每場課程回饋，歷程數據自動彙整，免去人工方式、加速學習成效分析。</li>
-          <li><strong style="color:var(--ink);">(5) 教學成效延伸</strong><br>提升教師數位素養，將身心覺察與 SEL 理念應用於課堂，提升學生學習成效。</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(1) SEL Body-Mind Awareness & Regulation</strong><br>Using equipment training and breath guidance, we cultivate present-moment focus during exercise to achieve mind-body balance and stress management.</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(2) Digital Video Content Production</strong><br>Six teaching videos are produced to break spatial limits, enabling online co-learning and independent practice anytime.</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(3) AI-Integrated Teaching Design & Auto-Feedback System</strong><br>Developing an "SEL Digital Practice Portfolio & Emotion Feedback System" as a model for AI-integrated assessment. GAS auto-computes emotional data and delivers personalized HTML reports via Gmail.</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(4) Digital Tools & Learning Assessment for Iterative Improvement</strong><br>Digital tools manage learning portfolios, collect per-session feedback, and auto-aggregate data — eliminating manual work and accelerating impact analysis.</li>
+          <li><strong style="color:var(--ink);">(5) Extending Teaching Impact</strong><br>Enhancing teachers' digital literacy and applying body-mind awareness and SEL principles in the classroom to elevate student learning outcomes.</li>
         </ul>
       </div>
     </div>
@@ -509,99 +508,99 @@
 
 <!-- WORKSHOPS -->
 <section id="workshops">
-  <div class="section-label">工作坊規劃</div>
-  <h2>8 次增能研習</h2>
-  <p class="lead">每一場都是身體與心靈的對話，從基礎建立到深度整合，循序漸進陪伴你成長。</p>
+  <div class="section-label">Workshop Schedule</div>
+  <h2>8-Session Development Series</h2>
+  <p class="lead">Each session is a conversation between body and mind — from building foundations to deep integration, growing together step by step.</p>
 
   <div class="workshop-list reveal">
     <div class="workshop-item">
       <div class="workshop-num">01</div>
       <div class="workshop-info">
-        <h3>身體評估與功能性動作啟動</h3>
-        <p>以人體力學為基礎，認識個人體能現況，建立正確的動作模式與訓練安全觀念，為後續課程奠定基礎。</p>
+        <h3>Body Assessment & Functional Movement Activation</h3>
+        <p>Grounded in biomechanics, participants assess their current physical condition, establish correct movement patterns and training safety concepts — laying the groundwork for the series.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">02</div>
       <div class="workshop-info">
-        <h3>核心穩定與脊椎保護訓練</h3>
-        <p>針對教師長時間站立與伏案的職業特性，強化核心肌群，有效預防腰背痠痛，建立穩固的身體支撐系統。</p>
+        <h3>Core Stability & Spinal Protection Training</h3>
+        <p>Targeting teachers who stand and sit for long periods, this session strengthens the core muscle group to prevent lower back pain and build a solid structural support system.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">03</div>
       <div class="workshop-info">
-        <h3>正念身體掃描與哈達瑜珈入門</h3>
-        <p>結合正念冥想與哈達瑜珈，透過靜態姿勢的維持與呼吸調節，引導參與者深化身體覺察，放鬆慢性緊繃。</p>
+        <h3>Mindful Body Scan & Intro to Hatha Yoga</h3>
+        <p>Combining mindfulness meditation with Hatha Yoga, participants deepen body awareness through sustained postures and breath regulation, releasing chronic tension.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">04</div>
       <div class="workshop-info">
-        <h3>阻力訓練應用與輔具操作實務</h3>
-        <p>介紹多元訓練輔具的安全操作方式，透過漸進式阻力訓練設計，提升整體肌耐力並促進新陳代謝。</p>
+        <h3>Resistance Training & Equipment Practice</h3>
+        <p>Introduces safe operation of diverse training equipment with progressive resistance design to improve overall muscular endurance and boost metabolism.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">05</div>
       <div class="workshop-info">
-        <h3>流動瑜珈與動態壓力釋放</h3>
-        <p>以串聯流動的動作序列為媒介，在有節奏的呼吸帶領下活化全身筋膜系統，釋放積累的壓力與情緒張力。</p>
+        <h3>Flow Yoga & Dynamic Stress Release</h3>
+        <p>Using flowing movement sequences as the medium, rhythmic breathing activates the full fascial system and releases accumulated stress and emotional tension.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">06</div>
       <div class="workshop-info">
-        <h3>SEL 情緒調節與身心整合實踐</h3>
-        <p>以社會情緒學習框架解析身體練習的心理效益，設計可移植至課堂的情緒調節活動，強化師生共同的 SEL 能力。</p>
+        <h3>SEL Emotional Regulation & Mind-Body Integration</h3>
+        <p>The SEL framework is applied to analyze the psychological benefits of physical practice, designing classroom-transferable emotional regulation activities to strengthen SEL capacity for teachers and students alike.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">07</div>
       <div class="workshop-info">
-        <h3>數位歷程回顧與同儕共備交流</h3>
-        <p>彙整個人練習數據與情緒歷程，透過同儕分享與反思討論，凝聚社群共識，並共同規劃教學應用方向。</p>
+        <h3>Digital Portfolio Review & Peer Collaboration</h3>
+        <p>Individual practice data and emotional portfolios are reviewed through peer sharing and reflective dialogue, building community consensus and co-planning classroom application.</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">Internal</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">08</div>
       <div class="workshop-info">
-        <h3>專家講座：身體釋放與自律神經調節</h3>
-        <p>邀請外部專家深度分享身體釋放技術與自律神經系統的調節策略，提供教師跨領域的專業視野與實踐工具。</p>
+        <h3>Expert Lecture: Physical Release & Autonomic Nervous System Regulation</h3>
+        <p>An external expert shares in-depth physical release techniques and autonomic nervous system regulation strategies, providing cross-disciplinary professional insight and practical tools.</p>
       </div>
-      <span class="workshop-badge badge-outer">外聘專家</span>
+      <span class="workshop-badge badge-outer">Guest Expert</span>
     </div>
   </div>
 </section>
 
 <!-- DIGITAL SYSTEM -->
 <section id="digital">
-  <div class="section-label">數位 × AI 應用</div>
-  <h2>SEL 情緒反饋系統</h2>
-  <p class="lead">資訊老師的專業核心。以 AI 協作開發自動化系統，讓每次練習都留下可量化的情緒軌跡。</p>
+  <div class="section-label">Digital × AI Integration</div>
+  <h2>SEL Emotion Feedback System</h2>
+  <p class="lead">Built by our IT teacher specialist. An AI-assisted automated system that leaves a quantifiable emotional trace after every practice session.</p>
 
   <div class="digital-grid reveal">
     <div class="digital-visual">
-      <pre><span class="code-comment">// SEL 情緒反饋系統 — GAS 核心邏輯</span>
+      <pre><span class="code-comment">// SEL Emotion Feedback System — GAS Core Logic</span>
 
 <span class="code-keyword">function</span> <span class="code-fn">onFormSubmit</span>(e) {
-  <span class="code-keyword">const</span> before = response[<span class="code-string">"情緒前測"</span>];
-  <span class="code-keyword">const</span> after  = response[<span class="code-string">"情緒後測"</span>];
+  <span class="code-keyword">const</span> before = response[<span class="code-string">"Pre-session mood"</span>];
+  <span class="code-keyword">const</span> after  = response[<span class="code-string">"Post-session mood"</span>];
 
-  <span class="code-comment">// 計算情緒改善指數</span>
+  <span class="code-comment">// Calculate emotional improvement index</span>
   <span class="code-keyword">const</span> pct = <span class="code-fn">calcImprovement</span>(before, after);
 
-  <span class="code-comment">// 產生個人化 HTML 報告</span>
+  <span class="code-comment">// Generate personalized HTML report</span>
   <span class="code-keyword">const</span> report = <span class="code-fn">buildEmail</span>(name, pct);
 
-  <span class="code-comment">// 自動寄送至社員信箱</span>
+  <span class="code-comment">// Auto-send to member's inbox</span>
   <span class="code-fn">GmailApp</span>.sendEmail(email, subject, report);
 }</pre>
     </div>
@@ -609,29 +608,29 @@
       <div class="digital-step">
         <div class="step-dot">1</div>
         <div class="step-content">
-          <h4>Google 表單收集情緒狀態</h4>
-          <p>社員於每次練習後填寫前後測情緒量表，資料即時寫入 Google Sheets。</p>
+          <h4>Google Form Collects Emotional States</h4>
+          <p>Members complete pre- and post-session emotional scales after each practice. Data writes instantly to Google Sheets.</p>
         </div>
       </div>
       <div class="digital-step">
         <div class="step-dot">2</div>
         <div class="step-content">
-          <h4>Apps Script 自動觸發運算</h4>
-          <p>表單提交後，觸發器立即啟動 GAS 腳本，進行情緒變化分析與百分比計算。</p>
+          <h4>Apps Script Auto-Triggers Computation</h4>
+          <p>Upon form submission, a trigger immediately launches the GAS script for emotional change analysis and percentage calculation.</p>
         </div>
       </div>
       <div class="digital-step">
         <div class="step-dot">3</div>
         <div class="step-content">
-          <h4>AI 協作產生個人化報告</h4>
-          <p>系統依情緒改善程度自動分類，產製包含數據視覺化的 HTML 個人報告。</p>
+          <h4>AI Collaboration Generates Personalized Reports</h4>
+          <p>The system auto-classifies emotional improvement levels and produces an HTML personal report with data visualizations.</p>
         </div>
       </div>
       <div class="digital-step">
         <div class="step-dot">4</div>
         <div class="step-content">
-          <h4>Gmail 自動寄送至個人信箱</h4>
-          <p>每位社員即時收到專屬的情緒分析信件，持續追蹤個人身心健康歷程。</p>
+          <h4>Gmail Auto-Sends to Personal Inbox</h4>
+          <p>Each member instantly receives their personalized emotional analysis email, enabling ongoing personal wellness tracking.</p>
         </div>
       </div>
     </div>
@@ -640,40 +639,40 @@
 
 <!-- INFO -->
 <section id="info">
-  <div class="section-label">時間 × 對象</div>
-  <h2>參與資訊</h2>
-  <p class="lead">適合所有希望在忙碌教學生活中找到身心平衡的教師夥伴，不需要任何運動基礎。</p>
+  <div class="section-label">Schedule × Eligibility</div>
+  <h2>Participation Details</h2>
+  <p class="lead">Open to all teachers seeking mind-body balance amid the demands of professional life. No prior fitness experience required.</p>
 
   <div class="info-cards reveal">
     <div class="info-card">
-      <div class="info-card-label">實施期間</div>
-      <div class="info-card-val">115學年度</div>
-      <div class="info-card-note">上下學期各 4 場，全年度陪伴</div>
+      <div class="info-card-label">Duration</div>
+      <div class="info-card-val">Academic Year 115</div>
+      <div class="info-card-note">4 sessions per semester — full-year accompaniment</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">實施頻率</div>
-      <div class="info-card-val">每月 1 場</div>
-      <div class="info-card-note">每場約 1 小時，中午或課後辦理(視場地和課表調整)</div>
+      <div class="info-card-label">Frequency</div>
+      <div class="info-card-val">Monthly</div>
+      <div class="info-card-note">~1 hour per session, held at lunch or after school (schedule subject to venue availability)</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">參與對象</div>
-      <div class="info-card-val">全校教師</div>
-      <div class="info-card-note">不限科別，歡迎各領域夥伴加入</div>
+      <div class="info-card-label">Eligibility</div>
+      <div class="info-card-val">All School Teachers</div>
+      <div class="info-card-note">No subject restrictions — all departments welcome</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">實施地點</div>
-      <div class="info-card-val">校內場地</div>
-      <div class="info-card-note">活動教室 / 韻律教室、重訓室</div>
+      <div class="info-card-label">Venue</div>
+      <div class="info-card-val">On-Campus</div>
+      <div class="info-card-note">Activity room / dance studio / weight training room</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">名額限制</div>
-      <div class="info-card-val">每場 20 人</div>
-      <div class="info-card-note">額滿為止，建議及早報名</div>
+      <div class="info-card-label">Capacity</div>
+      <div class="info-card-val">20 per Session</div>
+      <div class="info-card-note">First-come, first-served — early registration recommended</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">參與費用</div>
-      <div class="info-card-val">免費參加</div>
-      <div class="info-card-note">社群活動，全程免費，含數位回饋</div>
+      <div class="info-card-label">Cost</div>
+      <div class="info-card-val">Free</div>
+      <div class="info-card-note">Community activity — entirely free, including digital feedback</div>
     </div>
   </div>
 </section>
@@ -681,52 +680,52 @@
 <!-- REGISTER -->
 <section id="register">
   <div class="register-inner">
-    <div class="section-label">立即加入</div>
-    <h2>報名參加</h2>
-    <p class="lead">激勵研究社（肌力 × 身心覺察）教師限定｜現在就開始找回身心平衡，報名加入！</p>
+    <div class="section-label">Join Us</div>
+    <h2>Register Now</h2>
+    <p class="lead">Inspire Research Circle (Strength × Mind-Body Awareness) — Teachers only. Start reclaiming your mind-body balance today.</p>
 
     <form class="register-form" id="regForm">
       <div class="form-row">
         <div class="form-group">
-          <label>姓名 *</label>
-          <input id="f-name" type="text" placeholder="請輸入您的姓名" required>
+          <label>Name *</label>
+          <input id="f-name" type="text" placeholder="Your full name" required>
         </div>
         <div class="form-group">
-          <label>服務單位 / 科別</label>
-          <input id="f-dept" type="text" placeholder="例：國文科">
+          <label>Department / Subject</label>
+          <input id="f-dept" type="text" placeholder="e.g. English Department">
         </div>
       </div>
       <div class="form-group">
-        <label>電子郵件 *</label>
-        <input id="f-email" type="email" placeholder="用於接收活動通知與情緒回饋報告" required>
+        <label>Email Address *</label>
+        <input id="f-email" type="email" placeholder="For activity notifications and emotion feedback reports" required>
       </div>
       <div class="form-group">
-        <label>有興趣的場次主題</label>
+        <label>Session of Interest</label>
         <select id="f-session">
-          <option value="">請選擇</option>
-          <option>01 — 身體評估與功能性動作啟動</option>
-          <option>02 — 核心穩定與脊椎保護訓練</option>
-          <option>03 — 正念身體掃描與哈達瑜珈入門</option>
-          <option>04 — 阻力訓練應用與輔具操作實務</option>
-          <option>05 — 流動瑜珈與動態壓力釋放</option>
-          <option>06 — SEL 情緒調節與身心整合實踐</option>
-          <option>07 — 數位歷程回顧與同儕共備交流</option>
-          <option>08 — 專家講座：身體釋放與自律神經調節</option>
-          <option>全部都想參加！</option>
+          <option value="">Please select</option>
+          <option>01 — Body Assessment & Functional Movement Activation</option>
+          <option>02 — Core Stability & Spinal Protection Training</option>
+          <option>03 — Mindful Body Scan & Intro to Hatha Yoga</option>
+          <option>04 — Resistance Training & Equipment Practice</option>
+          <option>05 — Flow Yoga & Dynamic Stress Release</option>
+          <option>06 — SEL Emotional Regulation & Mind-Body Integration</option>
+          <option>07 — Digital Portfolio Review & Peer Collaboration</option>
+          <option>08 — Expert Lecture: Physical Release & ANS Regulation</option>
+          <option>All of them — sign me up for everything!</option>
         </select>
       </div>
       <div class="form-group">
-        <label>平日身體時常痠痛緊張無力的部位，或期待訓練或放鬆的部位（選填）</label>
-        <textarea id="f-message" placeholder="期待什麼、或有什麼需求都可以告訴我們…"></textarea>
+        <label>Areas of tension or soreness, or what you hope to train / release (optional)</label>
+        <textarea id="f-message" placeholder="Tell us what you're hoping for, or any specific needs you have…"></textarea>
       </div>
-      <button type="button" class="form-submit" onclick="submitForm()">送出報名 →</button>
-      <p class="form-note">報名後將收到確認信，活動前三天寄送提醒通知。</p>
+      <button type="button" class="form-submit" onclick="submitForm()">Submit Registration →</button>
+      <p class="form-note">A confirmation email will be sent upon registration. A reminder will follow three days before the event.</p>
     </form>
 
     <div class="success-msg" id="successMsg">
-      🎉 報名成功！<br>
-      感謝你的加入，我們很期待和你一起練習。<br>
-      確認信已寄至你的信箱，請注意查收。
+      🎉 Registration successful!<br>
+      Thank you for joining us — we can't wait to practice with you.<br>
+      A confirmation has been sent to your inbox. Please check your email.
     </div>
   </div>
 </section>
@@ -734,12 +733,12 @@
 <!-- FOOTER -->
 <footer>
   <div>
-    <strong>激勵研究社</strong> — 肌力全開 × 身心舒展<br>
-    2025–2026 教師專業學習社群
+    <strong>Inspire Research Circle</strong> — Strength Full-On × Mind-Body Wellness<br>
+    2025–2026 Teacher Professional Learning Community
   </div>
   <div style="text-align:right;">
-    SEL × 數位 × AI 協作<br>
-    身心全人教育實踐計畫
+    SEL × Digital × AI Collaboration<br>
+    Whole-Person Education in Practice
   </div>
 </footer>
 
@@ -751,10 +750,7 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => obs.observe(r));
 
-  // ======================================================
-  // 步驟：把下面的 YOUR_GAS_URL 換成你的 GAS Web App 網址
-  // 部署方式：Apps Script → 部署 → 新增部署作業 → 網頁應用程式
-  // ======================================================
+  // Same GAS endpoint as the Chinese version
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbwDlj-UKpSDCqcU-jDLggYqeJqjceVKqFLzAJ4ILetZV0t93lc19WDIJiCdQSOMxZMXbw/exec';
 
   async function submitForm() {
@@ -765,12 +761,12 @@
     const message = document.getElementById('f-message').value.trim();
 
     if (!name || !email) {
-      alert('請填寫必填欄位（姓名與電子郵件）');
+      alert('Please fill in the required fields (Name and Email).');
       return;
     }
 
     const btn = document.querySelector('.form-submit');
-    btn.textContent = '送出中…';
+    btn.textContent = 'Submitting…';
     btn.disabled = true;
 
     try {
@@ -778,13 +774,13 @@
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, dept, session, message })
+        body: JSON.stringify({ name, email, dept, session, message, lang: 'en' })
       });
       document.getElementById('regForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
     } catch (err) {
-      alert('送出失敗，請稍後再試或直接聯絡老師。');
-      btn.textContent = '送出報名 →';
+      alert('Submission failed. Please try again or contact us directly.');
+      btn.textContent = 'Submit Registration →';
       btn.disabled = false;
     }
   }

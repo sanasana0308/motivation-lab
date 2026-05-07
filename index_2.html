@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>激勵研究社 — 肌力全開 × 身心舒展</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #fdf8f2;
+    --accent: #c0392b;
+    --gold: #d4a843;
+    --sage: #6b8f71;
+    --warm: #e8ddd0;
+    --muted: #7a6f65;
+    --border: #d4c9bc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(253,248,242,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 700; font-size: 16px; letter-spacing: .08em;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; letter-spacing: .06em; color: var(--muted);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    font-size: 13px; letter-spacing: .06em;
+    padding: 8px 20px; border-radius: 2px;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: .14em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  .hero-tag::before {
+    content: ''; display: block;
+    width: 28px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700; line-height: 1.25;
+    letter-spacing: .04em; margin-bottom: 20px;
+  }
+  h1 em { color: var(--accent); font-style: normal; }
+  .hero-sub {
+    font-size: 15px; color: var(--muted);
+    max-width: 400px; margin-bottom: 40px; line-height: 1.9;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 14px 32px; font-size: 14px; letter-spacing: .06em;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    padding: 14px 32px; font-size: 14px; letter-spacing: .06em;
+    border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
+    text-decoration: none; transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--ink); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 32px; font-weight: 700; color: var(--ink);
+    line-height: 1;
+  }
+  .stat-num span { font-size: 16px; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: .04em; }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--warm);
+  }
+  .hero-right img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    opacity: .88;
+    animation: heroFade 1.2s ease both;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--warm) 0%, transparent 50%);
+  }
+  .hero-badge {
+    position: absolute; bottom: 40px; left: 40px;
+    background: rgba(253,248,242,.95);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-size: 12px; line-height: 1.7;
+    max-width: 220px;
+  }
+  .hero-badge strong { font-size: 14px; color: var(--accent); display: block; margin-bottom: 4px; }
+
+  @keyframes heroFade { from { opacity: 0; transform: scale(1.04); } to { opacity: .88; transform: scale(1); } }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 100px 80px; }
+  .section-label {
+    font-size: 11px; letter-spacing: .16em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); }
+  h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 700; line-height: 1.3; margin-bottom: 16px;
+  }
+  .lead { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.9; }
+
+  /* ── HIGHLIGHTS ── */
+  #highlights { background: var(--ink); color: var(--paper); }
+  #highlights .section-label { color: var(--gold); }
+  #highlights .section-label::after { background: var(--gold); }
+  #highlights h2 { color: var(--paper); }
+  #highlights .lead { color: rgba(253,248,242,.65); }
+
+  .highlights-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 2px; margin-top: 56px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .highlight-card {
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,.08);
+    transition: background .2s;
+    cursor: default;
+  }
+  .highlight-card:hover { background: rgba(255,255,255,.04); }
+  .highlight-icon {
+    font-size: 28px; margin-bottom: 20px;
+    display: block;
+  }
+  .highlight-card h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 17px; font-weight: 600; margin-bottom: 10px;
+    color: var(--gold);
+  }
+  .highlight-card p { font-size: 14px; color: rgba(253,248,242,.65); line-height: 1.8; }
+
+  /* ── ABOUT / 計畫內容 ── */
+  #about { padding: 100px 80px; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 56px; }
+  .about-block h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 12px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-block p, .about-block li { font-size: 14px; color: var(--muted); line-height: 1.9; }
+  .about-block ul { padding-left: 18px; }
+  .about-block ul li { margin-bottom: 6px; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-size: 11px; letter-spacing: .06em;
+    padding: 5px 12px; border: 1px solid var(--border);
+    border-radius: 99px; color: var(--muted);
+  }
+
+  /* ── WORKSHOPS ── */
+  #workshops { background: var(--warm); }
+  .workshop-list { margin-top: 56px; }
+  .workshop-item {
+    display: grid; grid-template-columns: 64px 1fr auto;
+    align-items: start; gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    transition: padding-left .2s;
+  }
+  .workshop-item:hover { padding-left: 8px; }
+  .workshop-item:first-child { border-top: 1px solid var(--border); }
+  .workshop-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px; font-weight: 700; color: var(--border);
+    line-height: 1;
+  }
+  .workshop-item:hover .workshop-num { color: var(--accent); }
+  .workshop-info h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .workshop-info p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .workshop-badge {
+    font-size: 11px; letter-spacing: .06em;
+    padding: 4px 12px; border-radius: 2px;
+    white-space: nowrap; margin-top: 4px;
+  }
+  .badge-inner { background: rgba(192,57,43,.1); color: var(--accent); }
+  .badge-outer { background: rgba(212,168,67,.15); color: #8a6a10; }
+
+  /* ── DIGITAL SYSTEM ── */
+  #digital { background: #fff; }
+  .digital-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 56px; }
+  .digital-visual {
+    background: var(--ink); border-radius: 8px;
+    padding: 40px; color: var(--paper);
+    font-family: monospace; font-size: 12px;
+    line-height: 1.8; position: relative; overflow: hidden;
+  }
+  .digital-visual::before {
+    content: '● ● ●'; position: absolute; top: 16px; left: 20px;
+    font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: 6px;
+  }
+  .digital-visual pre { margin-top: 24px; color: rgba(253,248,242,.8); white-space: pre-wrap; }
+  .code-keyword { color: #e06c75; }
+  .code-string { color: #98c379; }
+  .code-comment { color: rgba(255,255,255,.3); }
+  .code-fn { color: #61afef; }
+
+  .digital-steps { display: flex; flex-direction: column; gap: 24px; }
+  .digital-step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; flex-shrink: 0;
+  }
+  .step-content h4 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .step-content p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ── INFO ── */
+  #info { background: var(--paper); }
+  .info-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+  .info-card {
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: 28px; background: #fff;
+  }
+  .info-card-label { font-size: 11px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+  .info-card-val { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 600; }
+  .info-card-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* ── REGISTER ── */
+  #register { background: var(--accent); color: #fff; padding: 100px 80px; }
+  .register-inner { max-width: 620px; margin: 0 auto; }
+  #register .section-label { color: rgba(255,255,255,.6); }
+  #register .section-label::after { background: rgba(255,255,255,.4); }
+  #register h2 { color: #fff; margin-bottom: 12px; }
+  #register .lead { color: rgba(255,255,255,.75); }
+
+  .register-form { margin-top: 48px; display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; letter-spacing: .06em; color: rgba(255,255,255,.7); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 2px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    outline: none; transition: border-color .2s;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,.35); }
+  .form-group select option { background: var(--accent); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: rgba(255,255,255,.7); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    background: #fff; color: var(--accent);
+    border: none; border-radius: 2px;
+    padding: 16px; font-size: 15px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500; letter-spacing: .06em;
+    cursor: pointer; transition: opacity .2s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { opacity: .9; }
+  .form-note { font-size: 12px; color: rgba(255,255,255,.5); text-align: center; }
+
+  .success-msg {
+    display: none; background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 4px; padding: 24px;
+    text-align: center; font-size: 15px; line-height: 1.8;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(253,248,242,.5);
+    padding: 40px 80px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px;
+  }
+  footer strong { color: var(--paper); }
+
+  /* ── ANIMATIONS ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 80px 24px 40px; }
+    .hero-right { height: 320px; }
+    .highlights-grid,
+    .about-grid,
+    .digital-grid,
+    .info-cards { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 24px; }
+    #register { padding: 70px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">激勵<span>研究社</span></a>
+  <ul class="nav-links">
+    <li><a href="#highlights">活動亮點</a></li>
+    <li><a href="#about">計畫內容</a></li>
+    <li><a href="#workshops">工作坊</a></li>
+    <li><a href="#digital">數位系統</a></li>
+    <li><a href="#info">時間對象</a></li>
+  </ul>
+  <a href="#register" class="nav-cta">立即報名</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">2025–2026 教師增能社群</div>
+    <h1>肌力全開<br><em>×</em> 身心舒展</h1>
+    <p class="hero-sub">
+      激勵人心，不如肌力全開！<br>
+      照顧好自己，是教育最美的延續。<br>
+      社群結合身體運動與數位融入，好好照顧身體與療癒心情。
+    </p>
+    <div class="hero-btns">
+      <a href="#register" class="btn-primary">立即報名</a>
+      <a href="#about" class="btn-outline">了解更多</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8<span>次</span></div>
+        <div class="stat-label">增能工作坊</div>
+      </div>
+      <div>
+        <div class="stat-num">6<span>支</span></div>
+        <div class="stat-label">數位教學影片</div>
+      </div>
+      <div>
+        <div class="stat-num">1<span>套</span></div>
+        <div class="stat-label">AI 情緒反饋系統</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="poster.png" alt="激勵研究社宣傳海報">
+    <div class="hero-overlay"></div>
+    <div class="hero-badge">
+      <strong>身心全人 × SEL</strong>
+      肌力訓練 · 正念伸展 · 情緒覺察 · 數位歷程
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section id="highlights">
+  <div class="section-label">活動亮點搶先看</div>
+  <h2>四大核心體驗</h2>
+  <p class="lead">每一次相聚，都是給自己的禮物。身體、情緒、夥伴、數據，缺一不可。</p>
+
+  <div class="highlights-grid reveal">
+    <div class="highlight-card">
+      <span class="highlight-icon">🏋️</span>
+      <h3>8 次增能實作與共備</h3>
+      <p>動態肌力訓練與正念伸展，有效緩解久坐與教學產生的肩頸僵硬，找回身體活力。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="highlight-icon">🎙️</span>
+      <h3>外聘專家身心講座</h3>
+      <p>邀請專業講師分享身體釋放與心理健康管理策略，帶來跨域視野與實踐工具。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="highlight-icon">🤝</span>
+      <h3>數位平臺與智慧評量</h3>
+      <p>運用數位工具蒐集學習歷程，省去繁瑣人工統計，加速成效分析，落實課程滾動修正。</p>
+    </div>
+    <div class="highlight-card">
+      <span class="highlight-icon">📊</span>
+      <h3>數位量化情緒日誌</h3>
+      <p>運用 AI 與 GAS 自動化系統，關照情緒並獲得專屬數據反饋，每次練習都有數據印證成長。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">計畫內容</div>
+  <h2>激勵（肌力）研究社</h2>
+  <p class="lead">以人體力學與心理學為雙軸，整合身體覺察與情緒素養，打造全方位的教師增能平台。</p>
+
+  <div class="about-grid reveal">
+    <div>
+      <div class="about-block" style="margin-bottom:36px;">
+        <h3>核心理念</h3>
+        <p>本社群以「激勵（肌力）研究」為核心，結合身體鍛鍊與社會情緒學習（SEL），協助教師在繁忙的教學生活中，透過規律的身體訓練與正念實踐，建立個人的身心平衡機制，並將此理念延伸至課堂，提升學生的學習成效。</p>
+      </div>
+      <div class="about-block">
+        <h3>三大產出</h3>
+        <ul>
+          <li>教師社群增能工作坊 8 場（內聘 7 場、外聘 1 場）</li>
+          <li>數位教學影片 6 支，提供線上共備與自主練習，打破空間限制</li>
+          <li>「SEL 數位練習歷程與情緒反饋系統」1 套</li>
+        </ul>
+        <div class="tag-list">
+          <span class="tag">SEL</span>
+          <span class="tag">肌力訓練</span>
+          <span class="tag">正念伸展</span>
+          <span class="tag">數位素養</span>
+          <span class="tag">壓力管理</span>
+          <span class="tag">AI 協作</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-block" style="margin-bottom:36px;">
+        <h3>四大實施面向</h3>
+        <ul>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(1) SEL 身心覺察與調節</strong><br>透過輔具訓練與呼吸引導，在運動中培養專注當下的能力，達成身心平衡與壓力管理。</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(2) 數位影音教材產製</strong><br>錄製 6 支教學影片，打破空間限制，提供線上共備與練習。</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(3) AI 融入教學設計，數位歷程與自動反饋系統</strong><br>開發「SEL 數位練習歷程與情緒反饋系統」，示範 AI 融入教學評量的實踐模式。以 GAS 自動運算，透過 Gmail 寄送個人化情緒分析與進度報告。</li>
+          <li style="margin-bottom:12px;"><strong style="color:var(--ink);">(4) 數位工具與學習評量，協助課程滾動修正</strong><br>導入數位工具管理學習歷程，蒐集每場課程回饋，歷程數據自動彙整，免去人工方式、加速學習成效分析。</li>
+          <li><strong style="color:var(--ink);">(5) 教學成效延伸</strong><br>提升教師數位素養，將身心覺察與 SEL 理念應用於課堂，提升學生學習成效。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section id="workshops">
+  <div class="section-label">工作坊規劃</div>
+  <h2>8 次增能研習</h2>
+  <p class="lead">每一場都是身體與心靈的對話，從基礎建立到深度整合，循序漸進陪伴你成長。</p>
+
+  <div class="workshop-list reveal">
+    <div class="workshop-item">
+      <div class="workshop-num">01</div>
+      <div class="workshop-info">
+        <h3>身體評估與功能性動作啟動</h3>
+        <p>以人體力學為基礎，認識個人體能現況，建立正確的動作模式與訓練安全觀念，為後續課程奠定基礎。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">02</div>
+      <div class="workshop-info">
+        <h3>核心穩定與脊椎保護訓練</h3>
+        <p>針對教師長時間站立與伏案的職業特性，強化核心肌群，有效預防腰背痠痛，建立穩固的身體支撐系統。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">03</div>
+      <div class="workshop-info">
+        <h3>正念身體掃描與哈達瑜珈入門</h3>
+        <p>結合正念冥想與哈達瑜珈，透過靜態姿勢的維持與呼吸調節，引導參與者深化身體覺察，放鬆慢性緊繃。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">04</div>
+      <div class="workshop-info">
+        <h3>阻力訓練應用與輔具操作實務</h3>
+        <p>介紹多元訓練輔具的安全操作方式，透過漸進式阻力訓練設計，提升整體肌耐力並促進新陳代謝。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">05</div>
+      <div class="workshop-info">
+        <h3>流動瑜珈與動態壓力釋放</h3>
+        <p>以串聯流動的動作序列為媒介，在有節奏的呼吸帶領下活化全身筋膜系統，釋放積累的壓力與情緒張力。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">06</div>
+      <div class="workshop-info">
+        <h3>SEL 情緒調節與身心整合實踐</h3>
+        <p>以社會情緒學習框架解析身體練習的心理效益，設計可移植至課堂的情緒調節活動，強化師生共同的 SEL 能力。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">07</div>
+      <div class="workshop-info">
+        <h3>數位歷程回顧與同儕共備交流</h3>
+        <p>彙整個人練習數據與情緒歷程，透過同儕分享與反思討論，凝聚社群共識，並共同規劃教學應用方向。</p>
+      </div>
+      <span class="workshop-badge badge-inner">內聘共備</span>
+    </div>
+    <div class="workshop-item">
+      <div class="workshop-num">08</div>
+      <div class="workshop-info">
+        <h3>專家講座：身體釋放與自律神經調節</h3>
+        <p>邀請外部專家深度分享身體釋放技術與自律神經系統的調節策略，提供教師跨領域的專業視野與實踐工具。</p>
+      </div>
+      <span class="workshop-badge badge-outer">外聘專家</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL SYSTEM -->
+<section id="digital">
+  <div class="section-label">數位 × AI 應用</div>
+  <h2>SEL 情緒反饋系統</h2>
+  <p class="lead">資訊老師的專業核心。以 AI 協作開發自動化系統，讓每次練習都留下可量化的情緒軌跡。</p>
+
+  <div class="digital-grid reveal">
+    <div class="digital-visual">
+      <pre><span class="code-comment">// SEL 情緒反饋系統 — GAS 核心邏輯</span>
+
+<span class="code-keyword">function</span> <span class="code-fn">onFormSubmit</span>(e) {
+  <span class="code-keyword">const</span> before = response[<span class="code-string">"情緒前測"</span>];
+  <span class="code-keyword">const</span> after  = response[<span class="code-string">"情緒後測"</span>];
+
+  <span class="code-comment">// 計算情緒改善指數</span>
+  <span class="code-keyword">const</span> pct = <span class="code-fn">calcImprovement</span>(before, after);
+
+  <span class="code-comment">// 產生個人化 HTML 報告</span>
+  <span class="code-keyword">const</span> report = <span class="code-fn">buildEmail</span>(name, pct);
+
+  <span class="code-comment">// 自動寄送至社員信箱</span>
+  <span class="code-fn">GmailApp</span>.sendEmail(email, subject, report);
+}</pre>
+    </div>
+    <div class="digital-steps">
+      <div class="digital-step">
+        <div class="step-dot">1</div>
+        <div class="step-content">
+          <h4>Google 表單收集情緒狀態</h4>
+          <p>社員於每次練習後填寫前後測情緒量表，資料即時寫入 Google Sheets。</p>
+        </div>
+      </div>
+      <div class="digital-step">
+        <div class="step-dot">2</div>
+        <div class="step-content">
+          <h4>Apps Script 自動觸發運算</h4>
+          <p>表單提交後，觸發器立即啟動 GAS 腳本，進行情緒變化分析與百分比計算。</p>
+        </div>
+      </div>
+      <div class="digital-step">
+        <div class="step-dot">3</div>
+        <div class="step-content">
+          <h4>AI 協作產生個人化報告</h4>
+          <p>系統依情緒改善程度自動分類，產製包含數據視覺化的 HTML 個人報告。</p>
+        </div>
+      </div>
+      <div class="digital-step">
+        <div class="step-dot">4</div>
+        <div class="step-content">
+          <h4>Gmail 自動寄送至個人信箱</h4>
+          <p>每位社員即時收到專屬的情緒分析信件，持續追蹤個人身心健康歷程。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="section-label">時間 × 對象</div>
+  <h2>參與資訊</h2>
+  <p class="lead">適合所有希望在忙碌教學生活中找到身心平衡的教師夥伴，不需要任何運動基礎。</p>
+
+  <div class="info-cards reveal">
+    <div class="info-card">
+      <div class="info-card-label">實施期間</div>
+      <div class="info-card-val">2025 — 2026</div>
+      <div class="info-card-note">上下學期各 4 場，全年度陪伴</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">實施頻率</div>
+      <div class="info-card-val">每月 1 場</div>
+      <div class="info-card-note">每場約 2 小時，課後或假日辦理</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">參與對象</div>
+      <div class="info-card-val">全校教師</div>
+      <div class="info-card-note">不限科別，歡迎各領域夥伴加入</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">實施地點</div>
+      <div class="info-card-val">校內場地</div>
+      <div class="info-card-note">活動教室 / 韻律教室（依場次公告）</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">名額限制</div>
+      <div class="info-card-val">每場 20 人</div>
+      <div class="info-card-note">額滿為止，建議及早報名</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">參與費用</div>
+      <div class="info-card-val">免費參加</div>
+      <div class="info-card-note">社群活動，全程免費，含數位回饋</div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+  <div class="register-inner">
+    <div class="section-label">立即加入</div>
+    <h2>報名參加</h2>
+    <p class="lead">激勵研究社（肌力 × 身心覺察）教師限定｜現在就開始找回身心平衡，報名加入！</p>
+
+    <form class="register-form" id="regForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>姓名 *</label>
+          <input id="f-name" type="text" placeholder="請輸入您的姓名" required>
+        </div>
+        <div class="form-group">
+          <label>服務單位 / 科別</label>
+          <input id="f-dept" type="text" placeholder="例：國文科">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>電子郵件 *</label>
+        <input id="f-email" type="email" placeholder="用於接收活動通知與情緒回饋報告" required>
+      </div>
+      <div class="form-group">
+        <label>有興趣的場次主題</label>
+        <select id="f-session">
+          <option value="">請選擇</option>
+          <option>01 — 身體評估與功能性動作啟動</option>
+          <option>02 — 核心穩定與脊椎保護訓練</option>
+          <option>03 — 正念身體掃描與哈達瑜珈入門</option>
+          <option>04 — 阻力訓練應用與輔具操作實務</option>
+          <option>05 — 流動瑜珈與動態壓力釋放</option>
+          <option>06 — SEL 情緒調節與身心整合實踐</option>
+          <option>07 — 數位歷程回顧與同儕共備交流</option>
+          <option>08 — 專家講座：身體釋放與自律神經調節</option>
+          <option>全部都想參加！</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>想對社群說的話（選填）</label>
+        <textarea id="f-message" placeholder="期待什麼、或有什麼需求都可以告訴我們…"></textarea>
+      </div>
+      <button type="button" class="form-submit" onclick="submitForm()">送出報名 →</button>
+      <p class="form-note">報名後將收到確認信，活動前三天寄送提醒通知。</p>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      🎉 報名成功！<br>
+      感謝你的加入，我們很期待和你一起練習。<br>
+      確認信已寄至你的信箱，請注意查收。
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <strong>激勵研究社</strong> — 肌力全開 × 身心舒展<br>
+    2025–2026 教師專業學習社群
+  </div>
+  <div style="text-align:right;">
+    SEL × 數位 × AI 協作<br>
+    身心全人教育實踐計畫
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+
+  // ======================================================
+  // 步驟：把下面的 YOUR_GAS_URL 換成你的 GAS Web App 網址
+  // 部署方式：Apps Script → 部署 → 新增部署作業 → 網頁應用程式
+  // ======================================================
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbwDlj-UKpSDCqcU-jDLggYqeJqjceVKqFLzAJ4ILetZV0t93lc19WDIJiCdQSOMxZMXbw/exec';
+
+  async function submitForm() {
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const dept    = document.getElementById('f-dept').value.trim();
+    const session = document.getElementById('f-session').value;
+    const message = document.getElementById('f-message').value.trim();
+
+    if (!name || !email) {
+      alert('請填寫必填欄位（姓名與電子郵件）');
+      return;
+    }
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = '送出中…';
+    btn.disabled = true;
+
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, dept, session, message })
+      });
+      document.getElementById('regForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } catch (err) {
+      alert('送出失敗，請稍後再試或直接聯絡老師。');
+      btn.textContent = '送出報名 →';
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>

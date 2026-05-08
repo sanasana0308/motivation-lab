@@ -372,8 +372,6 @@
     #register { padding: 70px 24px; }
   }
 </style>
-<!-- EmailJS SDK -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -774,17 +772,10 @@
   reveals.forEach(r => obs.observe(r));
 
   // ======================================================
-  // 【EmailJS 設定區】填入你在 emailjs.com 拿到的三個 ID
+  // 步驟：把下面的 YOUR_GAS_URL 換成你的 GAS Web App 網址
+  // 部署方式：Apps Script → 部署 → 新增部署作業 → 網頁應用程式
   // ======================================================
-  const EMAILJS_PUBLIC_KEY  = 'wdcfLUJkeGeq7RIoo';
-  const EMAILJS_SERVICE_ID  = 'service_muc7t9i';
-  const EMAILJS_TEMPLATE_ID = 'template_5aetini';
-
-  // GAS 保留：用來把報名資料寫入 Google Sheets
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbwDlj-UKpSDCqcU-jDLggYqeJqjceVKqFLzAJ4ILetZV0t93lc19WDIJiCdQSOMxZMXbw/exec';
-
-  // 初始化 EmailJS（頁面載入後執行）
-  (function() { emailjs.init(EMAILJS_PUBLIC_KEY); })();
 
   async function submitForm() {
     const name    = document.getElementById('f-name').value.trim();
@@ -803,31 +794,16 @@
     btn.disabled = true;
 
     try {
-      // 1. EmailJS 寄確認信給報名者
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name:  name,
-        to_email: email,
-        dept:     dept || '未填寫',
-        session:  session || '未選擇',
-        message:  message || '無',
-        reply_to: email,
-      });
-
-      // 2. GAS 寫入 Google Sheets（靜默，不影響 UX）
-      fetch(GAS_URL, {
+      await fetch(GAS_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, dept, session, message })
-      }).catch(() => {});
-
-      // 3. 顯示成功
+      });
       document.getElementById('regForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
-
     } catch (err) {
-      console.error('EmailJS error:', err);
-      alert('送出失敗，請稍後再試。\n錯誤：' + (err.text || err.message || JSON.stringify(err)));
+      alert('送出失敗，請稍後再試或直接聯絡老師。');
       btn.textContent = '送出報名 →';
       btn.disabled = false;
     }

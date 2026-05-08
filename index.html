@@ -336,6 +336,60 @@
   .form-submit:hover { opacity: .9; }
   .form-note { font-size: 12px; color: rgba(255,255,255,.5); text-align: center; }
 
+  /* ── 複選場次 ── */
+  .session-checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .s-check {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 13px; line-height: 1.4;
+  }
+  .s-check:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.3); }
+  .s-check input[type=checkbox] {
+    appearance: none; -webkit-appearance: none;
+    width: 16px; height: 16px; min-width: 16px;
+    border: 1.5px solid rgba(255,255,255,.35);
+    border-radius: 3px; background: transparent;
+    cursor: pointer; margin-top: 1px;
+    transition: background .15s, border-color .15s;
+    position: relative;
+  }
+  .s-check input[type=checkbox]:checked {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .s-check input[type=checkbox]:checked::after {
+    content: '';
+    position: absolute; top: 2px; left: 5px;
+    width: 4px; height: 8px;
+    border: 2px solid var(--ink);
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+  .s-check.s-check-all {
+    grid-column: 1 / -1;
+    border-color: rgba(212,168,67,.35);
+    background: rgba(212,168,67,.08);
+  }
+  .s-check.s-check-all:hover { background: rgba(212,168,67,.15); }
+  .s-check.s-check-all span { color: var(--gold); font-weight: 500; }
+  .s-check.checked-item {
+    background: rgba(212,168,67,.12);
+    border-color: rgba(212,168,67,.4);
+  }
+  @media (max-width: 600px) {
+    .session-checks { grid-template-columns: 1fr; }
+  }
+
   .success-msg {
     display: none; background: rgba(255,255,255,.15);
     border: 1px solid rgba(255,255,255,.3);
@@ -704,19 +758,18 @@
         <input id="f-email" type="email" placeholder="用於接收活動通知與情緒回饋報告" required>
       </div>
       <div class="form-group">
-        <label>有興趣的場次主題</label>
-        <select id="f-session">
-          <option value="">請選擇</option>
-          <option>01 — 身體評估與功能性動作啟動</option>
-          <option>02 — 核心穩定與脊椎保護訓練</option>
-          <option>03 — 正念身體掃描與哈達瑜珈入門</option>
-          <option>04 — 阻力訓練應用與輔具操作實務</option>
-          <option>05 — 流動瑜珈與動態壓力釋放</option>
-          <option>06 — SEL 情緒調節與身心整合實踐</option>
-          <option>07 — 數位歷程回顧與同儕共備交流</option>
-          <option>08 — 專家講座：身體釋放與自律神經調節</option>
-          <option>全部都想參加！</option>
-        </select>
+        <label>有興趣的場次主題 <span style="font-weight:300;opacity:.7;font-size:12px;">（可複選）</span></label>
+        <div class="session-checks" id="f-session-group">
+          <label class="s-check"><input type="checkbox" value="01 — 身體評估與功能性動作啟動"><span>01 — 身體評估與功能性動作啟動</span></label>
+          <label class="s-check"><input type="checkbox" value="02 — 核心穩定與脊椎保護訓練"><span>02 — 核心穩定與脊椎保護訓練</span></label>
+          <label class="s-check"><input type="checkbox" value="03 — 正念身體掃描與哈達瑜珈入門"><span>03 — 正念身體掃描與哈達瑜珈入門</span></label>
+          <label class="s-check"><input type="checkbox" value="04 — 阻力訓練應用與輔具操作實務"><span>04 — 阻力訓練應用與輔具操作實務</span></label>
+          <label class="s-check"><input type="checkbox" value="05 — 流動瑜珈與動態壓力釋放"><span>05 — 流動瑜珈與動態壓力釋放</span></label>
+          <label class="s-check"><input type="checkbox" value="06 — SEL 情緒調節與身心整合實踐"><span>06 — SEL 情緒調節與身心整合實踐</span></label>
+          <label class="s-check"><input type="checkbox" value="07 — 數位歷程回顧與同儕共備交流"><span>07 — 數位歷程回顧與同儕共備交流</span></label>
+          <label class="s-check"><input type="checkbox" value="08 — 專家講座：身體釋放與自律神經調節"><span>08 — 專家講座：身體釋放與自律神經調節</span></label>
+          <label class="s-check s-check-all"><input type="checkbox" id="f-session-all" onchange="toggleAllSessions(this)"><span>✦ 全部都想參加！</span></label>
+        </div>
       </div>
       <div class="form-group">
         <label>平日身體時常痠痛緊張無力的部位，或期待訓練或放鬆的部位（選填）</label>
@@ -786,11 +839,33 @@
   // 初始化 EmailJS（頁面載入後執行）
   (function() { emailjs.init(EMAILJS_PUBLIC_KEY); })();
 
+  function toggleAllSessions(allBox) {
+    const items = document.querySelectorAll('#f-session-group input[type=checkbox]:not(#f-session-all)');
+    items.forEach(cb => {
+      cb.checked = allBox.checked;
+      cb.closest('.s-check').classList.toggle('checked-item', allBox.checked);
+    });
+  }
+
+  // 個別 checkbox 變更時同步視覺 & 取消「全選」
+  document.addEventListener('change', function(e) {
+    if (e.target.matches('#f-session-group input[type=checkbox]:not(#f-session-all)')) {
+      e.target.closest('.s-check').classList.toggle('checked-item', e.target.checked);
+      const all = document.querySelectorAll('#f-session-group input[type=checkbox]:not(#f-session-all)');
+      const allChecked = Array.from(all).every(cb => cb.checked);
+      document.getElementById('f-session-all').checked = allChecked;
+      document.querySelector('.s-check-all').classList.toggle('checked-item', allChecked);
+    }
+  });
+
   async function submitForm() {
     const name    = document.getElementById('f-name').value.trim();
     const email   = document.getElementById('f-email').value.trim();
     const dept    = document.getElementById('f-dept').value.trim();
-    const session = document.getElementById('f-session').value;
+    const checked = Array.from(document.querySelectorAll('#f-session-group input[type=checkbox]:checked:not(#f-session-all)'))
+                       .map(cb => cb.value);
+    const allChecked = document.getElementById('f-session-all').checked;
+    const session = allChecked ? '全部都想參加！' : (checked.length ? checked.join('、') : '未選擇');
     const message = document.getElementById('f-message').value.trim();
 
     if (!name || !email) {

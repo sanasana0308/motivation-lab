@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>激力充電站</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#f4f7f1;--surface:#fff;--fg:#1a2018;--muted:#6a7a64;
+  --border:#c8d8c0;--accent:#3a6b4a;--accent2:#2e5a3c;
+  --green:#9ec98f;--warm:#e8f2e3;--bar-bg:#ddebd6;
+  --shadow:0 2px 16px rgba(26,42,24,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--bg);color:var(--fg);font-family:'Noto Sans TC',sans-serif;font-size:15px;line-height:1.6;}
+body{padding:0 max(16px,env(safe-area-inset-left,0px));-webkit-tap-highlight-color:transparent;user-select:none;}
+
+/* ── layout ── */
+.shell{max-width:460px;margin:0 auto;padding-block:28px;display:flex;flex-direction:column;min-height:100vh;}
+.screen{display:none;flex-direction:column;flex:1;}
+.screen.on{display:flex;}
+.spacer{flex:1;}
+
+/* ── topbar ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.top-title{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+.top-back{font-size:13px;color:var(--muted);cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:4px;}
+.top-back:hover{color:var(--accent);}
+
+/* ── energy bar ── */
+.ebar{margin-bottom:20px;}
+.ebar-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.ebar-row span{font-size:12px;color:var(--muted);}
+.ebar-row strong{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:var(--accent);}
+.track{height:8px;border-radius:999px;background:var(--bar-bg);overflow:hidden;}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+/* ── card ── */
+.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border);padding:24px;margin-bottom:16px;}
+.clabel{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px;}
+.card h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;line-height:1.3;margin-bottom:10px;text-wrap:balance;}
+.card p{font-size:14px;color:var(--muted);line-height:1.7;}
+
+/* ── btns ── */
+.btn{padding:14px;border-radius:12px;border:none;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;width:100%;letter-spacing:.02em;}
+.btn:active{transform:scale(.97);}
+.btn-p{background:var(--accent);color:#fff;}
+.btn-p:hover{opacity:.9;}
+.btn-s{background:var(--warm);color:var(--fg);border:1px solid var(--border);}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+
+/* ── input / textarea ── */
+input[type=email],input[type=text],textarea{
+  width:100%;padding:12px 14px;border-radius:10px;
+  border:2px solid var(--border);background:var(--surface);
+  color:var(--fg);font-family:inherit;font-size:14px;
+  outline:none;transition:border-color .15s;
+  resize:vertical;
+}
+input:focus,textarea:focus{border-color:var(--accent);}
+::placeholder{color:var(--muted);}
+label.lbl{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;}
+
+/* ── tags ── */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+.tag{padding:8px 14px;border-radius:999px;border:2px solid var(--border);background:var(--surface);font-size:13px;cursor:pointer;transition:border-color .15s,background .15s,color .15s;}
+.tag.on{border-color:var(--accent);background:var(--warm);color:var(--accent);font-weight:500;}
+
+/* ── slider ── */
+.slider-wrap{margin-bottom:4px;}
+.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:4px;}
+.slider-val{text-align:center;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--accent);margin-top:10px;min-height:1.4em;}
+
+/* ── step indicator ── */
+.steps{display:flex;gap:6px;margin-bottom:20px;}
+.step{flex:1;height:4px;border-radius:999px;background:var(--bar-bg);transition:background .3s;}
+.step.done{background:var(--accent);}
+.step.active{background:var(--green);}
+
+/* ── FLIP CARDS ── */
+.flip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.fcard{perspective:900px;cursor:pointer;height:120px;}
+.finner{position:relative;width:100%;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}
+.fcard.flipped .finner{transform:rotateY(180deg);}
+.fface{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:2px solid var(--border);padding:10px;}
+.ffront{background:var(--surface);}
+.ffront .fq{font-size:11px;color:var(--muted);letter-spacing:.05em;}
+.fback{background:var(--warm);border-color:var(--accent);transform:rotateY(180deg);text-align:center;}
+.fback .fbicon{font-size:20px;}
+.fback .fbtitle{font-size:12px;font-weight:700;color:var(--accent);line-height:1.3;}
+.fback .fbdesc{font-size:11px;color:var(--muted);line-height:1.3;margin-top:2px;}
+.fcard.picked .fback{border-color:var(--accent2);background:color-mix(in srgb,var(--accent) 12%,var(--surface));}
+.flip-hint{font-size:12px;color:var(--muted);text-align:center;margin-bottom:12px;}
+
+/* ── ACTION CARDS ── */
+.agroup{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.abtn{padding:16px 10px;border-radius:14px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-family:inherit;font-size:13px;color:var(--fg);text-align:center;transition:border-color .15s,background .15s,transform .1s;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.abtn:active{transform:scale(.96);}
+.abtn.on{border-color:var(--accent);background:var(--warm);}
+.abtn .ai{font-size:22px;}
+.abtn .an{font-weight:700;font-size:13px;}
+.abtn .as{font-size:11px;color:var(--muted);}
+
+/* ── MODAL ── */
+.mbackdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;place-items:center;z-index:200;padding:16px;}
+.mbackdrop.on{display:grid;}
+.mbox{background:var(--surface);border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;}
+.mbox h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;}
+.msub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+
+/* count */
+.bignum{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;color:var(--accent);line-height:1;margin:12px 0 4px;}
+.bigtarget{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.circbtn{width:84px;height:84px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:32px;cursor:pointer;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;transition:transform .1s;}
+.circbtn:active{transform:scale(.84);}
+.circbtn.pop{animation:pop .22s ease;}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(.8)}100%{transform:scale(1)}}
+
+/* timer circle */
+.twrap{position:relative;width:120px;height:120px;margin:0 auto 10px;}
+.tsvg{transform:rotate(-90deg);}
+.ttrack{fill:none;stroke:var(--bar-bg);stroke-width:8;}
+.tprog{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .08s linear;}
+.tnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--accent);}
+.thint{font-size:13px;color:var(--muted);min-height:1.4em;margin-bottom:16px;transition:opacity .3s;}
+
+/* hold btn */
+.holdbtn{width:100%;padding:17px;border-radius:14px;background:var(--accent);color:#fff;border:none;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none;margin-bottom:8px;}
+
+/* breath */
+.bring{width:96px;height:96px;border-radius:50%;border:4px solid var(--accent);margin:0 auto 10px;display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--accent);transition:transform .05s;}
+
+/* fist */
+.fistbtn{width:88px;height:88px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);margin:0 auto 8px;display:grid;place-items:center;font-size:38px;cursor:pointer;transition:transform .1s,background .1s;user-select:none;-webkit-user-select:none;touch-action:none;}
+.fistbtn.gripping{background:var(--accent);transform:scale(.82);}
+.fistsets{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+.fiststage{font-size:13px;color:var(--muted);margin-bottom:12px;}
+
+/* ── REWARD CARD ── */
+.rcard{background:linear-gradient(135deg,var(--accent2),var(--accent));border-radius:18px;padding:28px;margin-bottom:14px;text-align:center;color:#fff;}
+.rcard .rico{font-size:44px;margin-bottom:10px;}
+.rcard h2{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:700;margin-bottom:8px;}
+.rcard p{font-size:13px;opacity:.85;line-height:1.7;}
+.takecard{background:var(--warm);border-radius:14px;padding:20px;margin-bottom:12px;border:1px solid var(--border);}
+.takecard .tc-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.takecard .tc-body{font-size:14px;line-height:1.7;}
+.takecard .tc-move{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:13px;color:var(--accent);font-weight:500;}
+.sent-note{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;}
+
+/* ── progress bar during action ── */
+.prog-wrap{margin:0 0 16px;}
+.prog-label{font-size:12px;color:var(--muted);margin-bottom:6px;text-align:center;}
+.prog-track{height:10px;border-radius:999px;background:var(--bar-bg);overflow:hidden;}
+.prog-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .1s linear;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- topbar -->
+<div class="topbar">
+  <span class="top-title">激力社群・充電站</span>
+  <a class="top-back" href="index.html">← 回首頁</a>
+</div>
+
+<!-- energy bar -->
+<div class="ebar" id="ebar" style="display:none">
+  <div class="ebar-row"><span>⚡ 能量</span><strong id="ePct">0%</strong></div>
+  <div class="track"><div class="fill" id="eFill" style="width:0%"></div></div>
+</div>
+
+<!-- ── S0: WELCOME ── -->
+<div class="screen on" id="s0">
+  <div class="card" style="margin-top:auto">
+    <div class="clabel">12/09（二）12:00・1F 松風閣</div>
+    <h2>剛才訓練完<br>來幫自己充個電 ⚡</h2>
+    <p>三個關卡，約 3 分鐘。電量充滿有帶走卡，還會寄信給你。</p>
+  </div>
+  <div style="margin-bottom:auto;padding-top:12px;">
+    <label class="lbl">你的 email（收帶走卡）</label>
+    <input id="emailIn" type="email" inputmode="email" placeholder="yourname@sssh.tp.edu.tw" style="margin-bottom:16px;">
+    <button class="btn btn-p" onclick="go('s1')">開始充電 →</button>
+  </div>
+</div>
+
+<!-- ── S1: 覺察關 ── -->
+<div class="screen" id="s1">
+  <div class="steps">
+    <div class="step active" id="st0"></div>
+    <div class="step" id="st1"></div>
+    <div class="step" id="st2"></div>
+  </div>
+  <div class="clabel">關卡 1・身體覺察</div>
+  <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:20px;text-wrap:balance;">
+    訓練結束，<br>你身體哪裡最有感覺？
+  </div>
+
+  <label class="lbl">點選（可複選）或直接填寫</label>
+  <div class="tags" id="bodyTags" style="margin-bottom:12px;">
+    <div class="tag" onclick="taggle(this,'肩頸')">🔴 肩頸</div>
+    <div class="tag" onclick="taggle(this,'上背')">上背</div>
+    <div class="tag" onclick="taggle(this,'下背腰')">下背腰</div>
+    <div class="tag" onclick="taggle(this,'大腿')">大腿</div>
+    <div class="tag" onclick="taggle(this,'核心')">核心</div>
+    <div class="tag" onclick="taggle(this,'手臂')">手臂</div>
+    <div class="tag" onclick="taggle(this,'全身都有')">全身都有 😅</div>
+    <div class="tag" onclick="taggle(this,'還好沒感覺')">還好、沒感覺</div>
+  </div>
+  <input type="text" id="bodyOther" placeholder="或直接輸入，例如：右邊膝蓋" style="margin-bottom:4px;">
+  <div style="font-size:12px;color:var(--muted);margin-bottom:20px;">選了就可以繼續，不用全填</div>
+
+  <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:16px;margin-top:4px;">
+    和進來之前比，<br>你的能量現在幾格？
+  </div>
+  <div class="slider-wrap">
+    <div class="slider-labels"><span>😮‍💨 更沉了</span><span>⚡ 充好電</span></div>
+    <input type="range" id="eSlider" min="0" max="100" value="50" oninput="slideUpdate(this.value)">
+    <div class="slider-val" id="sliderLbl">還好，差不多</div>
+  </div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-p" id="s1btn" onclick="go('s2')" style="margin-top:16px;">下一關 →</button>
+</div>
+
+<!-- ── S2: 情境關 ── -->
+<div class="screen" id="s2">
+  <div class="steps">
+    <div class="step done"></div>
+    <div class="step active"></div>
+    <div class="step"></div>
+  </div>
+  <div class="clabel">關卡 2・情境破關</div>
+  <div style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;line-height:1.4;margin-bottom:6px;">翻開一張牌，選你最有感的情境</div>
+  <div class="flip-hint">點牌翻開，翻了才能選</div>
+
+  <div class="flip-grid" id="flipGrid"></div>
+
+  <div id="actionArea" style="display:none">
+    <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">選一個動作，做完才能繼續 👇</div>
+    <div class="agroup" id="agroup"></div>
+    <div class="prog-wrap" id="actionProg" style="display:none">
+      <div class="prog-label" id="progLbl">進行中…</div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-p" id="s2btn" onclick="go('s3')" disabled style="margin-top:16px;">最後一關 →</button>
+</div>
+
+<!-- ── S3: 給學生的話 ── -->
+<div class="screen" id="s3">
+  <div class="steps">
+    <div class="step done"></div>
+    <div class="step done"></div>
+    <div class="step active"></div>
+  </div>
+  <div class="clabel">關卡 3・給學生的話</div>
+  <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:16px;text-wrap:balance;">
+    如果現在可以對學生說一句話，你說什麼？
+  </div>
+
+  <label class="lbl">點選現成的，或自己填（20字以內）</label>
+  <div class="tags" id="msgTags" style="margin-bottom:12px;">
+    <div class="tag" onclick="pickMsg(this,'你已經很努力了，繼續走。')">你已經很努力了</div>
+    <div class="tag" onclick="pickMsg(this,'你的存在對這個班很重要。')">你對這個班很重要</div>
+    <div class="tag" onclick="pickMsg(this,'沒關係，今天到了就夠了。')">今天來了就夠了</div>
+    <div class="tag" onclick="pickMsg(this,'小步前進，也是前進。')">小步前進也是前進</div>
+    <div class="tag" onclick="pickMsg(this,'你願意出現，就是力量。')">出現就是力量</div>
+  </div>
+  <textarea id="msgInput" rows="2" maxlength="40" placeholder="或自己寫一句（40字以內）" oninput="checkMsg()"></textarea>
+  <div style="font-size:12px;color:var(--muted);margin-top:4px;margin-bottom:20px;">選了或填了才能送出</div>
+
+  <div class="spacer"></div>
+  <button class="btn btn-p" id="s3btn" onclick="finish()" disabled>充電完成，取得帶走卡 ⚡</button>
+</div>
+
+<!-- ── S4: 完成 ── -->
+<div class="screen" id="s4">
+  <div class="rcard">
+    <div class="rico">⚡</div>
+    <h2>電量充滿！</h2>
+    <p>帶走卡已寄到你的信箱<br>帶進下一堂課用 🌱</p>
+  </div>
+
+  <div class="takecard" id="takecard">
+    <div class="tc-label">📋 你的帶走卡</div>
+    <div class="tc-body">
+      <strong>今天你覺察到：</strong><br>
+      <span id="tc-body-part" style="color:var(--muted)"></span>
+    </div>
+    <div class="tc-body" style="margin-top:8px;">
+      <strong>你想對學生說：</strong><br>
+      <span id="tc-msg" style="color:var(--accent);font-size:16px;font-weight:700;"></span>
+    </div>
+    <div class="tc-move">
+      🏋️ 教室可用的動作：站立覺察 2 分鐘<br>
+      <span style="font-size:12px;color:var(--muted);font-weight:400;">全班起立→閉眼深呼吸三次→心裡默說一件今天要完成的事→點頭坐下。任何教室都能用，不需瑜珈墊。</span>
+    </div>
+  </div>
+
+  <p class="sent-note" id="sentNote">資料紀錄中…</p>
+</div>
+
+</div><!-- /shell -->
+
+<!-- MODAL -->
+<div class="mbackdrop" id="modal">
+  <div class="mbox" id="mbox"></div>
+</div>
+
+<script>
+// ── GAS URL（貼入你的 Apps Script Web App 網址）──
+const GAS = 'GAS_ENDPOINT_HERE';
+
+// ── STATE ──
+const D = {
+  email:'', bodyParts:[], bodyOther:'', energyPct:50,
+  situation:'', action:'', msg:''
+};
+let _pendingBtn = null;
+
+// ── ENERGY ──
+let curE = 0;
+function setE(v){
+  curE = Math.min(100,v);
+  document.getElementById('eFill').style.width = curE+'%';
+  document.getElementById('ePct').textContent = curE+'%';
+}
+function addE(d){ setE(curE+d); }
+
+// ── SCREENS ──
+function go(id){
+  if(id==='s1'){
+    const em = document.getElementById('emailIn').value.trim();
+    if(!em){ document.getElementById('emailIn').focus(); return; }
+    D.email = em;
+    document.getElementById('ebar').style.display='block';
+    setE(15);
+    buildFlipCards();
+  }
+  if(id==='s2'){ addE(20); }
+  if(id==='s3'){ /* already added energy on action done */ }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// ── S1 body tags ──
+function taggle(el,val){
+  el.classList.toggle('on');
+  D.bodyParts = Array.from(document.querySelectorAll('#bodyTags .tag.on')).map(t=>t.dataset.v||t.textContent.trim());
+}
+
+const sliderLabels=['😮‍💨 更沉了、身體在消化','還需要一點時間','差不多、還好','輕鬆了一些 ✨','⚡ 明顯充好電了！'];
+function slideUpdate(v){
+  D.energyPct = parseInt(v);
+  document.getElementById('sliderLbl').textContent = sliderLabels[Math.min(4,Math.floor(v/20))];
+}
+
+// ── FLIP CARDS ──
+const SITUS = [
+  {icon:'😤',title:'下課後學生一個都不問你',desc:'你認真備課，結果靜默。',
+   actions:[{icon:'🦵',name:'深蹲 5 次',sub:'感受腳踩地',type:'count',target:5},
+            {icon:'🫁',name:'深呼吸',sub:'一個完整循環',type:'breath'},
+            {icon:'🤲',name:'握拳放鬆',sub:'3 組',type:'fist'},
+            {icon:'🧍',name:'站立覺察',sub:'10 秒',type:'timer',secs:10,hints:['感受腳底踩地','讓呼吸慢下來','肩膀放鬆']}]},
+  {icon:'📚',title:'改卷改到忘了自己是誰',desc:'第 30 份，手還是繼續動著。',
+   actions:[{icon:'🔄',name:'肩膀轉圈',sub:'前後各 5 次',type:'hold',secs:5,label:'按住，肩膀在轉…'},
+            {icon:'🫁',name:'深呼吸',sub:'一個完整循環',type:'breath'},
+            {icon:'👀',name:'望遠 20 秒',sub:'看窗外最遠處',type:'timer',secs:20,hints:['找一個遠方的點','讓眼睛放鬆','感受視野變寬']},
+            {icon:'🤲',name:'握拳放鬆',sub:'3 組',type:'fist'}]},
+  {icon:'🏃',title:'下午第一節，空氣凝固',desc:'你和學生都快睡著了。',
+   actions:[{icon:'🦵',name:'站起來踏步',sub:'10 步',type:'count',target:10},
+            {icon:'💪',name:'推牆 5 秒',sub:'感受核心啟動',type:'hold',secs:5,label:'按住，核心啟動中…'},
+            {icon:'🫁',name:'深呼吸',sub:'一個完整循環',type:'breath'},
+            {icon:'🧍',name:'站立覺察',sub:'10 秒',type:'timer',secs:10,hints:['感受腳底','讓脊椎拉長','慢慢呼氣']}]},
+  {icon:'😬',title:'快遲到，心臟要跳出來',desc:'三樓還差兩層，鐘快響了。',
+   actions:[{icon:'🫁',name:'深呼吸',sub:'先呼吸再說',type:'breath'},
+            {icon:'🤲',name:'握拳放鬆',sub:'3 組，放慢節奏',type:'fist'},
+            {icon:'🧍',name:'站立覺察',sub:'10 秒',type:'timer',secs:10,hints:['找一個遠方的點','慢慢呼氣','心跳在降了']},
+            {icon:'🦵',name:'踏步 8 步',sub:'節奏放慢',type:'count',target:8}]},
+];
+
+let shuffled = [];
+function buildFlipCards(){
+  shuffled = [...SITUS].sort(()=>Math.random()-.5);
+  const grid = document.getElementById('flipGrid');
+  grid.innerHTML='';
+  shuffled.forEach((s,i)=>{
+    const c = document.createElement('div');
+    c.className='fcard';
+    c.innerHTML=`<div class="finner">
+      <div class="fface ffront"><span style="font-size:26px">🃏</span><span class="fq">翻開看看</span></div>
+      <div class="fface fback"><div class="fbicon">${s.icon}</div><div class="fbtitle">${s.title}</div><div class="fbdesc">${s.desc}</div></div>
+    </div>`;
+    c.onclick=()=>{
+      if(!c.classList.contains('flipped')){ c.classList.add('flipped'); return; }
+      pickSitu(c,s);
+    };
+    grid.appendChild(c);
+  });
+}
+
+function pickSitu(card,s){
+  D.situation = s.title;
+  document.querySelectorAll('.fcard').forEach(c=>c.classList.remove('picked'));
+  card.classList.add('picked');
+  buildActions(s.actions);
+  document.getElementById('actionArea').style.display='block';
+  addE(10);
+}
+
+// ── ACTIONS ──
+function buildActions(acts){
+  const g = document.getElementById('agroup');
+  g.innerHTML='';
+  document.getElementById('actionProg').style.display='none';
+  document.getElementById('s2btn').disabled=true;
+  acts.forEach(a=>{
+    const b=document.createElement('button');
+    b.className='abtn';
+    b.innerHTML=`<span class="ai">${a.icon}</span><span class="an">${a.name}</span><span class="as">${a.sub}</span>`;
+    b.onclick=()=>startAction(b,a);
+    g.appendChild(b);
+  });
+}
+
+function startAction(btn,action){
+  document.querySelectorAll('.abtn').forEach(b=>b.disabled=true);
+  btn.classList.add('on');
+  _pendingBtn=btn;
+  const t=action.type;
+  if(t==='count') openCount(action);
+  else if(t==='breath') openBreath();
+  else if(t==='timer') openTimer(action);
+  else if(t==='hold') openHold(action);
+  else if(t==='fist') openFist();
+}
+
+function actionDone(){
+  D.action = _pendingBtn ? _pendingBtn.querySelector('.an').textContent : '';
+  addE(25);
+  document.getElementById('s2btn').disabled=false;
+  closeModal();
+}
+
+// ── COUNT ──
+function openCount(a){
+  const target=a.target||5;
+  showModal(`<h3>${a.icon} ${a.name}</h3><div class="msub">${a.sub}</div>
+    <div class="bignum" id="cn">0</div>
+    <div class="bigtarget">目標 ${target} 次</div>
+    <button class="circbtn" id="cb">↓</button>`);
+  let n=0;
+  document.getElementById('cb').onclick=()=>{
+    const cb=document.getElementById('cb');
+    cb.classList.remove('pop');void cb.offsetWidth;cb.classList.add('pop');
+    n++;document.getElementById('cn').textContent=n;
+    if(n>=target) setTimeout(actionDone,350);
+  };
+}
+
+// ── BREATH ──
+function openBreath(){
+  showModal(`<h3>🫁 深呼吸</h3><div class="msub">按住→吸氣　放開→呼氣<br>完成一個完整循環</div>
+    <div class="bring" id="br">準備</div>
+    <button class="holdbtn" id="hbtn">按住　吸氣</button>`);
+  const btn=document.getElementById('hbtn'),ring=document.getElementById('br');
+  let ph='idle';
+  btn.addEventListener('pointerdown',()=>{
+    if(ph!=='idle')return;ph='inhale';ring.textContent='吸氣';
+    ring.style.transition='transform 3s ease-out';ring.style.transform='scale(1.4)';
+  });
+  const ex=()=>{
+    if(ph!=='inhale')return;ph='exhale';ring.textContent='呼氣';
+    ring.style.transition='transform 2.5s ease-in';ring.style.transform='scale(1)';
+    setTimeout(actionDone,2600);
+  };
+  btn.addEventListener('pointerup',ex);btn.addEventListener('pointercancel',ex);
+}
+
+// ── TIMER ──
+function openTimer(a){
+  const secs=a.secs||10,hints=a.hints||['感受當下','慢慢呼氣','放鬆肩膀'];
+  const C=2*Math.PI*52;
+  showModal(`<h3>${a.icon} ${a.name}</h3><div class="msub">${a.sub}</div>
+    <div class="twrap">
+      <svg class="tsvg" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="ttrack" cx="60" cy="60" r="52"/>
+        <circle class="tprog" id="tp" cx="60" cy="60" r="52" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
+      </svg>
+      <div class="tnum" id="tn">${secs}</div>
+    </div>
+    <div class="thint" id="th">${hints[0]}</div>
+    <button class="btn btn-p" id="tgo">開始</button>`);
+  document.getElementById('tgo').onclick=()=>{
+    document.getElementById('tgo').style.display='none';
+    let rem=secs,hi=0;
+    const prog=document.getElementById('tp'),num=document.getElementById('tn'),hint=document.getElementById('th');
+    const iv=setInterval(()=>{
+      rem--;num.textContent=rem;
+      prog.style.strokeDashoffset=C*(rem/secs);
+      if(Math.floor((secs-rem)%Math.ceil(secs/hints.length))===0&&hi<hints.length-1){
+        hi++;hint.style.opacity=0;setTimeout(()=>{hint.textContent=hints[hi];hint.style.opacity=1;},300);
+      }
+      if(rem<=0){clearInterval(iv);setTimeout(actionDone,350);}
+    },1000);
+  };
+}
+
+// ── HOLD ──
+function openHold(a){
+  const secs=a.secs||5,C=2*Math.PI*52;
+  showModal(`<h3>${a.icon} ${a.name}</h3><div class="msub">${a.sub}</div>
+    <div class="twrap">
+      <svg class="tsvg" width="120" height="120" viewBox="0 0 120 120">
+        <circle class="ttrack" cx="60" cy="60" r="52"/>
+        <circle class="tprog" id="hp" cx="60" cy="60" r="52" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
+      </svg>
+      <div class="tnum" id="hn">${secs}</div>
+    </div>
+    <div class="msub" style="margin-bottom:10px;">按住不放，放開就重來</div>
+    <button class="holdbtn" id="hbtn">${a.label||'按住'}</button>`);
+  const btn=document.getElementById('hbtn'),prog=document.getElementById('hp'),num=document.getElementById('hn');
+  let iv=null,el=0,done=false;
+  btn.addEventListener('pointerdown',()=>{
+    if(done)return;
+    btn.style.background='var(--accent2)';
+    iv=setInterval(()=>{
+      el+=0.1;prog.style.strokeDashoffset=C*(1-el/secs);num.textContent=Math.max(0,Math.ceil(secs-el));
+      if(el>=secs){done=true;clearInterval(iv);setTimeout(actionDone,300);}
+    },100);
+  });
+  const stop=()=>{if(!done){clearInterval(iv);el=0;prog.style.strokeDashoffset=C;num.textContent=secs;btn.style.background='';}};
+  btn.addEventListener('pointerup',stop);btn.addEventListener('pointercancel',stop);
+}
+
+// ── FIST ──
+function openFist(){
+  showModal(`<h3>🤲 握拳放鬆</h3><div class="msub">按住→握拳　放開→放鬆　共 3 組</div>
+    <div class="fistsets" id="fs">0 / 3</div>
+    <div class="fiststage" id="fst">按住開始</div>
+    <div class="fistbtn" id="fb">✋</div>`);
+  let sets=0,ph='open';
+  const fb=document.getElementById('fb'),fs=document.getElementById('fs'),fst=document.getElementById('fst');
+  fb.addEventListener('pointerdown',()=>{
+    if(ph!=='open')return;ph='gripping';fb.classList.add('gripping');fb.textContent='✊';fst.textContent='放開→放鬆';
+  });
+  const rel=()=>{
+    if(ph!=='gripping')return;ph='open';fb.classList.remove('gripping');fb.textContent='✋';
+    sets++;fs.textContent=`${sets} / 3`;
+    if(sets>=3){fst.textContent='完成！';setTimeout(actionDone,500);}
+    else fst.textContent='再來一組，按住握拳';
+  };
+  fb.addEventListener('pointerup',rel);fb.addEventListener('pointercancel',rel);
+}
+
+// ── S3 msg ──
+function pickMsg(el,val){
+  document.querySelectorAll('#msgTags .tag').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('msgInput').value=val;
+  D.msg=val;
+  document.getElementById('s3btn').disabled=false;
+}
+function checkMsg(){
+  const v=document.getElementById('msgInput').value.trim();
+  D.msg=v;
+  document.getElementById('s3btn').disabled=!v;
+  document.querySelectorAll('#msgTags .tag').forEach(t=>t.classList.remove('on'));
+}
+
+// ── FINISH ──
+function finish(){
+  D.bodyOther = document.getElementById('bodyOther').value.trim();
+  D.bodyParts = [...D.bodyParts];
+  if(D.bodyOther) D.bodyParts.push(D.bodyOther);
+  D.msg = document.getElementById('msgInput').value.trim() || D.msg;
+  setE(100);
+  go('s4');
+  // fill takecard
+  document.getElementById('tc-body-part').textContent = D.bodyParts.join('、') || '身體各處';
+  document.getElementById('tc-msg').textContent = '「'+D.msg+'」';
+  submitData();
+}
+
+function submitData(){
+  const payload={
+    timestamp:new Date().toISOString(),
+    session:'12/09 重訓基礎動作 × 自我覺察',
+    email:D.email,
+    body_parts:D.bodyParts.join('、'),
+    energy_slider:D.energyPct,
+    situation:D.situation,
+    action:D.action,
+    msg:D.msg,
+  };
+  if(GAS==='GAS_ENDPOINT_HERE'){
+    document.getElementById('sentNote').textContent='（測試模式，資料未送出）';
+    return;
+  }
+  fetch(GAS,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(()=>{ document.getElementById('sentNote').textContent='✅ 帶走卡已寄至你的信箱'; })
+    .catch(()=>{ document.getElementById('sentNote').textContent='網路問題，資料未送出，請截圖保存。'; });
+}
+
+// ── MODAL ──
+function showModal(html){document.getElementById('mbox').innerHTML=html;document.getElementById('modal').classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+</script>
+</body>
+</html>

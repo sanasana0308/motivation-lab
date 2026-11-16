@@ -7,14 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1410;
-    --paper: #fdf8f2;
-    --accent: #c0392b;
-    --gold: #d4a843;
-    --sage: #6b8f71;
-    --warm: #e8ddd0;
-    --muted: #7a6f65;
-    --border: #d4c9bc;
+    --ink:    #1a2018;
+    --paper:  #f5f7f2;
+    --accent: #3a6b4a;
+    --accent2:#2e5a3c;
+    --gold:   #7aaa6e;
+    --sage:   #5c8f6b;
+    --warm:   #e4ece0;
+    --muted:  #677060;
+    --border: #c5d4be;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,8 +76,8 @@
   }
   .nav-cta:hover { opacity: .85; animation: none; }
   @keyframes navPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(188,105,74,.5); }
-    50%      { box-shadow: 0 0 0 7px rgba(188,105,74,0); }
+    0%,100% { box-shadow: 0 0 0 0 rgba(58,107,74,.5); }
+    50%      { box-shadow: 0 0 0 7px rgba(58,107,74,0); }
   }
 
   /* ── HERO ── */
@@ -114,28 +115,18 @@
   /* ── 動畫報名按鈕 ── */
   .btn-register {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--accent); color: #fff;
-    font-size: 17px; font-weight: 600; letter-spacing: .04em;
-    padding: 16px 36px; border-radius: 4px;
+    background: transparent; color: var(--accent);
+    font-size: 16px; font-weight: 600; letter-spacing: .04em;
+    padding: 14px 32px; border-radius: 4px;
+    border: 2px solid var(--accent);
     text-decoration: none;
-    animation: heroPulse 2s ease-in-out infinite;
+    transition: background .2s, color .2s;
     position: relative; overflow: hidden;
   }
-  .btn-register::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
-    transform: translateX(-100%);
-    animation: heroShine 2.8s ease-in-out infinite;
-  }
-  .btn-register:hover { opacity: .9; animation: none; }
-  .btn-register:hover::after { animation: none; }
+  .btn-register:hover { background: var(--accent); color: #fff; }
   @keyframes heroPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(188,105,74,.55), 0 4px 20px rgba(188,105,74,.35); }
-    50%      { box-shadow: 0 0 0 10px rgba(188,105,74,0), 0 4px 24px rgba(188,105,74,.5); }
-  }
-  @keyframes heroShine {
-    0%   { transform: translateX(-100%); }
-    40%,100% { transform: translateX(200%); }
+    0%,100% { box-shadow: 0 0 0 0 rgba(58,107,74,.4); }
+    50%      { box-shadow: 0 0 0 10px rgba(58,107,74,0); }
   }
 
   .btn-primary {
@@ -208,19 +199,19 @@
   .lead { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.9; }
 
   /* ── HIGHLIGHTS ── */
-  #highlights { background: var(--ink); color: var(--paper); }
-  #highlights .section-label { color: var(--gold); }
-  #highlights .section-label::after { background: var(--gold); }
+  #highlights { background: #1a2018; color: var(--paper); }
+  #highlights .section-label { color: #9ec98f; }
+  #highlights .section-label::after { background: #9ec98f; }
   #highlights h2 { color: var(--paper); }
-  #highlights .lead { color: rgba(253,248,242,.65); }
+  #highlights .lead { color: rgba(240,245,235,.65); }
 
   .highlights-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 2px; margin-top: 56px;
+    gap: 2px; margin-top: 48px;
     border: 1px solid rgba(255,255,255,.08);
   }
   .highlight-card {
-    padding: 40px;
+    padding: 32px;
     border: 1px solid rgba(255,255,255,.08);
     transition: background .2s;
     cursor: default;
@@ -233,9 +224,9 @@
   .highlight-card h3 {
     font-family: 'Noto Serif TC', serif;
     font-size: 17px; font-weight: 600; margin-bottom: 10px;
-    color: var(--gold);
+    color: #9ec98f;
   }
-  .highlight-card p { font-size: 14px; color: rgba(253,248,242,.65); line-height: 1.8; }
+  .highlight-card p { font-size: 14px; color: rgba(240,245,235,.65); line-height: 1.8; }
 
   /* ── ABOUT / 計畫內容 ── */
   #about { padding: 100px 80px; }
@@ -258,6 +249,8 @@
 
   /* ── WORKSHOPS ── */
   #workshops { background: var(--warm); }
+  #workshops .section-label { color: var(--accent); }
+  #workshops .section-label::after { background: var(--accent); }
   .workshop-list { margin-top: 56px; }
   .workshop-item {
     display: grid; grid-template-columns: 64px 1fr auto;
@@ -273,7 +266,7 @@
     font-size: 28px; font-weight: 700; color: var(--border);
     line-height: 1;
   }
-  .workshop-item:hover .workshop-num { color: var(--accent); }
+  .workshop-item:hover .workshop-num { color: var(--accent); transition: color .2s; }
   .workshop-info h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
   .workshop-info p { font-size: 13px; color: var(--muted); line-height: 1.7; }
   .workshop-badge {
@@ -281,8 +274,8 @@
     padding: 4px 12px; border-radius: 2px;
     white-space: nowrap; margin-top: 4px;
   }
-  .badge-inner { background: rgba(192,57,43,.1); color: var(--accent); }
-  .badge-outer { background: rgba(212,168,67,.15); color: #8a6a10; }
+  .badge-inner { background: rgba(58,107,74,.1); color: var(--accent); }
+  .badge-outer { background: rgba(122,170,110,.15); color: #3a6b4a; }
 
   /* ── DIGITAL SYSTEM ── */
   #digital { background: #fff; }
@@ -326,7 +319,7 @@
   .info-card-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   /* ── REGISTER ── */
-  #register { background: var(--accent); color: #fff; padding: 100px 80px; }
+  #register { background: var(--accent2); color: #fff; padding: 100px 80px; }
   .register-inner { max-width: 620px; margin: 0 auto; }
   #register .section-label { color: rgba(255,255,255,.6); }
   #register .section-label::after { background: rgba(255,255,255,.4); }
@@ -493,7 +486,7 @@
       社群結合身體運動與數位融入，好好照顧身體與療癒心情。
     </p>
     <div class="hero-btns">
-      <a href="#register" class="btn-register">🎯 立即報名</a>
+      <a href="#register" class="btn-register">立即報名</a>
       <a href="#about" class="btn-outline">了解更多</a>
     </div>
     <div class="hero-stats">
@@ -597,73 +590,41 @@
 <!-- WORKSHOPS -->
 <section id="workshops">
   <div class="section-label">工作坊規劃</div>
-  <h2>上學期 4 場，下學期待定</h2>
-  <p class="lead">每一場都是身體與心靈的對話，從基礎建立到深度整合，循序漸進陪伴你成長。</p>
+  <h2>上學期 4 場</h2>
+  <p class="lead">每週二中午或課後，1F 松風閣。每場 1 小時，動作體驗 + SEL 覺察 + 帶走素材。</p>
 
   <div class="workshop-list reveal">
     <div class="workshop-item">
       <div class="workshop-num">01</div>
       <div class="workshop-info">
-        <h3>身體評估與功能性動作啟動</h3>
-        <p>以人體力學為基礎，認識個人體能現況，建立正確的動作模式與訓練安全觀念，為後續課程奠定基礎。</p>
+        <h3>重訓基礎動作 × 自我覺察</h3>
+        <p>12/09（二）12:00｜主持：周立德<br>深蹲、硬舉喚醒身體覺察，Slido 收集鼓勵語句，AI 統整為班級語句包。</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">肌力</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">02</div>
       <div class="workshop-info">
-        <h3>核心穩定與脊椎保護訓練</h3>
-        <p>針對教師長時間站立與伏案的職業特性，強化核心肌群，有效預防腰背痠痛，建立穩固的身體支撐系統。</p>
+        <h3>核心穩定訓練 × 情緒識別</h3>
+        <p>12/16（二）16:00｜主持：陳育詮<br>棒式、鳥狗式建立穩定感，Padlet 收集情緒詞，AI 生成課前短語包。</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-inner">肌力</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">03</div>
       <div class="workshop-info">
-        <h3>正念身體掃描與哈達瑜珈入門</h3>
-        <p>結合正念冥想與哈達瑜珈，透過靜態姿勢的維持與呼吸調節，引導參與者深化身體覺察，放鬆慢性緊繃。</p>
+        <h3>修復瑜珈 × 壓力調節</h3>
+        <p>12/23（二）12:00｜主持：蘇于瑄<br>嬰兒式、腿靠牆深度放鬆，Google 表單收集高壓情境，AI 整理課堂調節動作小卡。</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
+      <span class="workshop-badge badge-outer">瑜珈</span>
     </div>
     <div class="workshop-item">
       <div class="workshop-num">04</div>
       <div class="workshop-info">
-        <h3>阻力訓練應用與輔具操作實務</h3>
-        <p>介紹多元訓練輔具的安全操作方式，透過漸進式阻力訓練設計，提升整體肌耐力並促進新陳代謝。</p>
+        <h3>流動瑜珈 × SEL 整合共備</h3>
+        <p>12/30（二）16:00｜主持：張心瑋<br>流動序列暖身後共備，每人設計一個教室可用的 SEL 活動，Canva 共編成跨科手冊。</p>
       </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
-    </div>
-    <div class="workshop-item">
-      <div class="workshop-num">05</div>
-      <div class="workshop-info">
-        <h3>流動瑜珈與動態壓力釋放</h3>
-        <p>以串聯流動的動作序列為媒介，在有節奏的呼吸帶領下活化全身筋膜系統，釋放積累的壓力與情緒張力。</p>
-      </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
-    </div>
-    <div class="workshop-item">
-      <div class="workshop-num">06</div>
-      <div class="workshop-info">
-        <h3>SEL 情緒調節與身心整合實踐</h3>
-        <p>以社會情緒學習框架解析身體練習的心理效益，設計可移植至課堂的情緒調節活動，強化師生共同的 SEL 能力。</p>
-      </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
-    </div>
-    <div class="workshop-item">
-      <div class="workshop-num">07</div>
-      <div class="workshop-info">
-        <h3>數位歷程回顧與同儕共備交流</h3>
-        <p>彙整個人練習數據與情緒歷程，透過同儕分享與反思討論，凝聚社群共識，並共同規劃教學應用方向。</p>
-      </div>
-      <span class="workshop-badge badge-inner">內聘共備</span>
-    </div>
-    <div class="workshop-item">
-      <div class="workshop-num">08</div>
-      <div class="workshop-info">
-        <h3>專家講座：身體釋放與自律神經調節</h3>
-        <p>邀請外部專家深度分享身體釋放技術與自律神經系統的調節策略，提供教師跨領域的專業視野與實踐工具。</p>
-      </div>
-      <span class="workshop-badge badge-outer">外聘專家</span>
+      <span class="workshop-badge badge-outer">瑜珈 · 共備</span>
     </div>
   </div>
 </section>
@@ -676,34 +637,34 @@
 
   <div class="info-cards reveal">
     <div class="info-card">
-      <div class="info-card-label">實施期間</div>
-      <div class="info-card-val">115學年度</div>
-      <div class="info-card-note">上下學期各 4 場，全年度陪伴</div>
+      <div class="info-card-label">上學期場次</div>
+      <div class="info-card-val">4 場</div>
+      <div class="info-card-note">12/09、12/16、12/23、12/30（週二）</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">實施頻率</div>
-      <div class="info-card-val">每月 1 場</div>
-      <div class="info-card-note">每場約 1 小時，中午或課後辦理(視場地和課表調整)</div>
+      <div class="info-card-label">時間</div>
+      <div class="info-card-val">中午 / 課後</div>
+      <div class="info-card-note">12:00–13:00 或 16:00–17:00，依場次而定</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">地點</div>
+      <div class="info-card-val">1F 松風閣</div>
+      <div class="info-card-note">松山高中校內，提供輔具（瑜珈墊、磚）</div>
     </div>
     <div class="info-card">
       <div class="info-card-label">參與對象</div>
       <div class="info-card-val">全校教師</div>
-      <div class="info-card-note">不限科別，歡迎各領域夥伴加入</div>
+      <div class="info-card-note">不限科別，不需運動基礎</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">實施地點</div>
-      <div class="info-card-val">校內場地</div>
-      <div class="info-card-note">活動教室 / 韻律教室、重訓室</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">名額限制</div>
+      <div class="info-card-label">名額</div>
       <div class="info-card-val">每場 20 人</div>
       <div class="info-card-note">額滿為止，建議及早報名</div>
     </div>
     <div class="info-card">
-      <div class="info-card-label">參與費用</div>
-      <div class="info-card-val">免費參加</div>
-      <div class="info-card-note">社群活動，全程免費，含數位回饋</div>
+      <div class="info-card-label">費用</div>
+      <div class="info-card-val">免費</div>
+      <div class="info-card-note">全程免費，每場皆有數位帶走素材</div>
     </div>
   </div>
 </section>
@@ -763,10 +724,10 @@
   <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,20,16,.97) 50%,rgba(26,20,16,.75));"></div>
 
   <div style="position:relative;z-index:2;">
-    <div style="font-size:11px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;">師資陣容<span style="flex:1;max-width:40px;height:1px;background:var(--gold);display:block;"></span></div>
+    <div style="font-size:11px;letter-spacing:.16em;color:#9ec98f;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px;">師資陣容<span style="flex:1;max-width:40px;height:1px;background:#9ec98f;display:block;"></span></div>
     <h2 style="font-family:'Noto Serif TC',serif;font-size:clamp(26px,3vw,38px);font-weight:700;color:var(--paper);line-height:1.3;margin-bottom:16px;">猜猜我是誰？</h2>
     <p style="font-size:15px;color:rgba(253,248,242,.55);line-height:1.9;margin-bottom:32px;max-width:400px;">海報中這位健壯的身影，是我們社群的哪位老師？前往互動頁面猜猜看，解鎖完整師資陣容！</p>
-    <a href="team.html" style="display:inline-block;background:var(--gold);color:var(--ink);padding:13px 32px;font-size:14px;letter-spacing:.04em;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:2px;text-decoration:none;transition:opacity .2s;">猜猜我是誰 →</a>
+    <a href="team.html" style="display:inline-block;background:#9ec98f;color:#1a2018;padding:13px 32px;font-size:14px;letter-spacing:.04em;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:2px;text-decoration:none;transition:opacity .2s;">猜猜我是誰 →</a>
   </div>
 
   <div style="position:relative;z-index:2;">

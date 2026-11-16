@@ -176,10 +176,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:4p
   <div class="card" style="margin-top:auto">
     <div class="clabel">12/09（二）12:00・1F 松風閣</div>
     <h2>剛才訓練完<br>來幫自己充個電 ⚡</h2>
-    <p>三個關卡，約 3 分鐘。電量充滿有帶走卡，還會寄信給你。</p>
+    <p>三個關卡，約 3 分鐘。電量充滿有帶走卡，可以截圖帶走。</p>
   </div>
   <div style="margin-bottom:auto;padding-top:12px;">
-    <label class="lbl">你的 email（收帶走卡）</label>
+    <label class="lbl">你的 email（紀錄用）</label>
     <input id="emailIn" type="email" inputmode="email" placeholder="yourname@sssh.tp.edu.tw" style="margin-bottom:16px;">
     <button class="btn btn-p" onclick="go('s1')">開始充電 →</button>
   </div>
@@ -282,7 +282,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:4p
   <div class="rcard">
     <div class="rico">⚡</div>
     <h2>電量充滿！</h2>
-    <p>帶走卡已寄到你的信箱<br>帶進下一堂課用 🌱</p>
+    <p>截圖帶走卡，帶進下一堂課用 🌱</p>
   </div>
 
   <div class="takecard" id="takecard">
@@ -313,7 +313,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:4p
 
 <script>
 // ── GAS URL（貼入你的 Apps Script Web App 網址）──
-const GAS = 'GAS_ENDPOINT_HERE';
+const GAS = 'https://script.google.com/macros/s/AKfycbwDlj-UKpSDCqcU-jDLggYqeJqjceVKqFLzAJ4ILetZV0t93lc19WDIJiCdQSOMxZMXbw/exec';
 
 // ── STATE ──
 const D = {
@@ -603,7 +603,7 @@ function submitData(){
     return;
   }
   fetch(GAS,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-    .then(()=>{ document.getElementById('sentNote').textContent='✅ 帶走卡已寄至你的信箱'; })
+    .then(()=>{ document.getElementById('sentNote').textContent='✅ 資料已紀錄'; })
     .catch(()=>{ document.getElementById('sentNote').textContent='網路問題，資料未送出，請截圖保存。'; });
 }
 

@@ -71,8 +71,13 @@
     font-size: 13px; letter-spacing: .06em;
     padding: 8px 20px; border-radius: 2px;
     text-decoration: none; transition: opacity .2s;
+    animation: navPulse 2.4s ease-in-out infinite;
   }
-  .nav-cta:hover { opacity: .85; }
+  .nav-cta:hover { opacity: .85; animation: none; }
+  @keyframes navPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(188,105,74,.5); }
+    50%      { box-shadow: 0 0 0 7px rgba(188,105,74,0); }
+  }
 
   /* ── HERO ── */
   #hero {
@@ -106,6 +111,33 @@
     max-width: 400px; margin-bottom: 40px; line-height: 1.9;
   }
   .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  /* ── 動畫報名按鈕 ── */
+  .btn-register {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    font-size: 17px; font-weight: 600; letter-spacing: .04em;
+    padding: 16px 36px; border-radius: 4px;
+    text-decoration: none;
+    animation: heroPulse 2s ease-in-out infinite;
+    position: relative; overflow: hidden;
+  }
+  .btn-register::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: heroShine 2.8s ease-in-out infinite;
+  }
+  .btn-register:hover { opacity: .9; animation: none; }
+  .btn-register:hover::after { animation: none; }
+  @keyframes heroPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(188,105,74,.55), 0 4px 20px rgba(188,105,74,.35); }
+    50%      { box-shadow: 0 0 0 10px rgba(188,105,74,0), 0 4px 24px rgba(188,105,74,.5); }
+  }
+  @keyframes heroShine {
+    0%   { transform: translateX(-100%); }
+    40%,100% { transform: translateX(200%); }
+  }
+
   .btn-primary {
     background: var(--accent); color: #fff;
     padding: 14px 32px; font-size: 14px; letter-spacing: .06em;
@@ -462,7 +494,7 @@
       社群結合身體運動與數位融入，好好照顧身體與療癒心情。
     </p>
     <div class="hero-btns">
-      <a href="#register" class="btn-primary">立即報名</a>
+      <a href="#register" class="btn-register">🎯 立即報名</a>
       <a href="#about" class="btn-outline">了解更多</a>
     </div>
     <div class="hero-stats">

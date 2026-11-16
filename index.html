@@ -115,7 +115,7 @@
   /* ── 動畫報名按鈕 ── */
   .btn-register {
     display: inline-flex; align-items: center; gap: 8px;
-    background: transparent; color: var(--accent);
+    background: var(--accent); color: #fff;
     font-size: 16px; font-weight: 600; letter-spacing: .04em;
     padding: 14px 32px; border-radius: 4px;
     border: 2px solid var(--accent);
@@ -123,7 +123,7 @@
     transition: background .2s, color .2s;
     position: relative; overflow: hidden;
   }
-  .btn-register:hover { background: var(--accent); color: #fff; }
+  .btn-register:hover { background: var(--accent2); border-color: var(--accent2); }
   @keyframes heroPulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(58,107,74,.4); }
     50%      { box-shadow: 0 0 0 10px rgba(58,107,74,0); }
@@ -461,9 +461,8 @@
   <a href="#hero" class="nav-logo">激勵<span>研究社</span></a>
   <ul class="nav-links">
     <li><a href="#register" class="nav-cta" style="margin-right:8px;">立即報名</a></li>
-    <li><a href="#highlights">活動亮點</a></li>
     <li><a href="#about">計畫內容</a></li>
-    <li><a href="#workshops">工作坊</a></li>
+    <li><a href="#workshops">四場活動</a></li>
     <li><a href="#info">時間對象</a></li>
     <li><a href="#team">師資陣容</a></li>
   </ul>
@@ -496,12 +495,12 @@
         <div class="stat-label">上學期工作坊</div>
       </div>
       <div>
-        <div class="stat-num">7<span>人</span></div>
+        <div class="stat-num">9<span>人</span></div>
         <div class="stat-label">跨科社群成員</div>
       </div>
       <div>
-        <div class="stat-num">1<span>本</span></div>
-        <div class="stat-label">跨科 SEL 活動手冊</div>
+        <div class="stat-num">1<span>份</span></div>
+        <div class="stat-label">學期末共備產出</div>
       </div>
     </div>
   </div>
@@ -515,35 +514,6 @@
   </div>
 </section>
 
-<!-- HIGHLIGHTS -->
-<section id="highlights">
-  <div class="section-label">活動亮點搶先看</div>
-  <h2>四大核心體驗</h2>
-  <p class="lead">每一次相聚，都是給自己的禮物。身體、情緒、夥伴、數據，缺一不可。</p>
-
-  <div class="highlights-grid reveal">
-    <div class="highlight-card">
-      <span class="highlight-icon">🏋️</span>
-      <h3>重訓基礎動作 × 自我覺察</h3>
-      <p>12/09（二）12:00｜周立德主持。從深蹲、硬舉喚醒身體覺察，引導「力量就是自我支撐」的情緒連結，用 Slido 收集班級鼓勵語句，AI 統整帶回教室。</p>
-    </div>
-    <div class="highlight-card">
-      <span class="highlight-icon">💪</span>
-      <h3>核心穩定訓練 × 情緒識別</h3>
-      <p>12/16（二）16:00｜陳育詮主持。棒式、鳥狗式等核心訓練，建立穩定感與情緒管理的連結，Padlet 收集訓練前後情緒詞，AI 生成課前短語包。</p>
-    </div>
-    <div class="highlight-card">
-      <span class="highlight-icon">🧘</span>
-      <h3>修復瑜珈 × 壓力調節</h3>
-      <p>12/23（二）12:00｜蘇于瑄主持。嬰兒式、腿靠牆深度放鬆，練習辨識壓力反應，Google 表單收集高壓情境，AI 整理出課堂調節動作小卡。</p>
-    </div>
-    <div class="highlight-card">
-      <span class="highlight-icon">🌊</span>
-      <h3>流動瑜珈 × SEL 整合共備</h3>
-      <p>12/30（二）16:00｜張心瑋主持。流動序列熱身後，每人設計一個教室可用的 SEL 活動，Canva 共編成果，AI 整合為跨科 SEL 活動手冊。</p>
-    </div>
-  </div>
-</section>
 
 <!-- ABOUT -->
 <section id="about">
@@ -590,16 +560,16 @@
 
 <!-- WORKSHOPS -->
 <section id="workshops">
-  <div class="section-label">工作坊規劃</div>
+  <div class="section-label">四場活動</div>
   <h2>上學期 4 場</h2>
-  <p class="lead">每週二中午或課後，1F 松風閣。每場 1 小時，動作體驗 + SEL 覺察 + 帶走素材。</p>
+  <p class="lead">每週二，1F 松風閣。每場 1 小時：動作體驗 → SEL 覺察 → 數位帶走。</p>
 
   <div class="workshop-list reveal">
     <div class="workshop-item">
       <div class="workshop-num">01</div>
       <div class="workshop-info">
         <h3>重訓基礎動作 × 自我覺察</h3>
-        <p>12/09（二）12:00｜主持：周立德<br>深蹲、硬舉喚醒身體覺察，Slido 收集鼓勵語句，AI 統整為班級語句包。</p>
+        <p>12/09（二）12:00｜主持：周立德<br>深蹲、硬舉喚醒身體覺察，引導「力量就是自我支撐」的情緒連結。Slido 匿名收集鼓勵語句，AI 統整為班級語句包帶走。</p>
       </div>
       <span class="workshop-badge badge-inner">肌力</span>
     </div>
@@ -607,7 +577,7 @@
       <div class="workshop-num">02</div>
       <div class="workshop-info">
         <h3>核心穩定訓練 × 情緒識別</h3>
-        <p>12/16（二）16:00｜主持：陳育詮<br>棒式、鳥狗式建立穩定感，Padlet 收集情緒詞，AI 生成課前短語包。</p>
+        <p>12/16（二）16:00｜主持：陳育詮<br>棒式、鳥狗式建立穩定感，連結情緒調節與身體穩定。Padlet 收集訓練前後情緒詞，AI 生成課前短語包。</p>
       </div>
       <span class="workshop-badge badge-inner">肌力</span>
     </div>
@@ -615,7 +585,7 @@
       <div class="workshop-num">03</div>
       <div class="workshop-info">
         <h3>修復瑜珈 × 壓力調節</h3>
-        <p>12/23（二）12:00｜主持：蘇于瑄<br>嬰兒式、腿靠牆深度放鬆，Google 表單收集高壓情境，AI 整理課堂調節動作小卡。</p>
+        <p>12/23（二）12:00｜主持：蘇于瑄<br>嬰兒式、腿靠牆深度放鬆，練習辨識壓力反應。Google 表單收集高壓情境，AI 整理課堂調節動作小卡。</p>
       </div>
       <span class="workshop-badge badge-outer">瑜珈</span>
     </div>
@@ -623,7 +593,7 @@
       <div class="workshop-num">04</div>
       <div class="workshop-info">
         <h3>流動瑜珈 × SEL 整合共備</h3>
-        <p>12/30（二）16:00｜主持：張心瑋<br>流動序列暖身後共備，每人設計一個教室可用的 SEL 活動，Canva 共編成跨科手冊。</p>
+        <p>12/30（二）16:00｜主持：張心瑋<br>流動序列暖身後，每人設計一個教室可用的 SEL 活動。Canva 共編，AI 整合為跨科活動集，分享全校。</p>
       </div>
       <span class="workshop-badge badge-outer">瑜珈 · 共備</span>
     </div>

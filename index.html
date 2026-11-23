@@ -345,47 +345,47 @@
   .info-card-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   /* ── REGISTER ── */
-  #register { background: var(--accent2); color: #fff; padding: 100px 80px; }
+  #register { background: #fff; color: var(--fg); padding: 100px 80px; }
   .register-inner { max-width: 620px; margin: 0 auto; }
-  #register .section-label { color: rgba(255,255,255,.6); }
-  #register .section-label::after { background: rgba(255,255,255,.4); }
-  #register h2 { color: #fff; margin-bottom: 12px; }
-  #register .lead { color: rgba(255,255,255,.75); }
+  #register .section-label { color: var(--accent); }
+  #register .section-label::after { background: var(--accent); }
+  #register h2 { color: var(--fg); margin-bottom: 12px; }
+  #register .lead { color: var(--muted); }
 
   .register-form { margin-top: 48px; display: flex; flex-direction: column; gap: 16px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group label { font-size: 12px; letter-spacing: .06em; color: rgba(255,255,255,.7); }
+  .form-group label { font-size: 14px; letter-spacing: .03em; color: var(--fg); font-weight: 500; }
   .form-group input,
   .form-group select,
   .form-group textarea {
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 2px;
-    padding: 12px 16px;
-    color: #fff;
-    font-size: 14px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 13px 16px;
+    color: var(--fg);
+    font-size: 15px;
     font-family: 'Noto Sans TC', sans-serif;
     outline: none; transition: border-color .2s;
   }
   .form-group input::placeholder,
-  .form-group textarea::placeholder { color: rgba(255,255,255,.35); }
-  .form-group select option { background: var(--accent); }
+  .form-group textarea::placeholder { color: var(--muted); }
+  .form-group select option { background: #fff; color: var(--fg); }
   .form-group input:focus,
   .form-group select:focus,
-  .form-group textarea:focus { border-color: rgba(255,255,255,.7); }
+  .form-group textarea:focus { border-color: var(--accent); }
   .form-group textarea { resize: vertical; min-height: 90px; }
   .form-submit {
-    background: #fff; color: var(--accent);
-    border: none; border-radius: 2px;
-    padding: 16px; font-size: 15px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 16px; font-size: 16px;
     font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500; letter-spacing: .06em;
+    font-weight: 600; letter-spacing: .04em;
     cursor: pointer; transition: opacity .2s;
     margin-top: 8px;
   }
-  .form-submit:hover { opacity: .9; }
-  .form-note { font-size: 12px; color: rgba(255,255,255,.5); text-align: center; }
+  .form-submit:hover { opacity: .88; }
+  .form-note { font-size: 13px; color: var(--muted); text-align: center; margin-top: 4px; }
 
   /* ── 複選場次 ── */
   .session-checks {
@@ -396,46 +396,46 @@
   }
   .s-check {
     display: flex; align-items: flex-start; gap: 10px;
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 4px;
-    padding: 10px 12px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
     cursor: pointer;
     transition: background .15s, border-color .15s;
-    font-size: 13px; line-height: 1.4;
+    font-size: 14px; line-height: 1.5; color: var(--fg);
   }
-  .s-check:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.3); }
+  .s-check:hover { background: var(--warm); border-color: var(--accent); }
   .s-check input[type=checkbox] {
     appearance: none; -webkit-appearance: none;
-    width: 16px; height: 16px; min-width: 16px;
-    border: 1.5px solid rgba(255,255,255,.35);
-    border-radius: 3px; background: transparent;
+    width: 20px; height: 20px; min-width: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px; background: #fff;
     cursor: pointer; margin-top: 1px;
     transition: background .15s, border-color .15s;
     position: relative;
   }
   .s-check input[type=checkbox]:checked {
-    background: var(--gold);
-    border-color: var(--gold);
+    background: var(--accent);
+    border-color: var(--accent);
   }
   .s-check input[type=checkbox]:checked::after {
     content: '';
-    position: absolute; top: 2px; left: 5px;
-    width: 4px; height: 8px;
-    border: 2px solid var(--ink);
+    position: absolute; top: 2px; left: 6px;
+    width: 5px; height: 10px;
+    border: 2.5px solid #fff;
     border-top: none; border-left: none;
     transform: rotate(45deg);
   }
   .s-check.s-check-all {
     grid-column: 1 / -1;
-    border-color: rgba(212,168,67,.35);
-    background: rgba(212,168,67,.08);
+    border-color: var(--accent);
+    background: var(--warm);
   }
-  .s-check.s-check-all:hover { background: rgba(212,168,67,.15); }
-  .s-check.s-check-all span { color: var(--gold); font-weight: 500; }
+  .s-check.s-check-all:hover { background: color-mix(in srgb, var(--accent) 10%, #fff); }
+  .s-check.s-check-all span { color: var(--accent); font-weight: 500; }
   .s-check.checked-item {
-    background: rgba(212,168,67,.12);
-    border-color: rgba(212,168,67,.4);
+    background: var(--warm);
+    border-color: var(--accent);
   }
   @media (max-width: 600px) {
     .session-checks { grid-template-columns: 1fr; }
@@ -721,11 +721,11 @@
         <textarea id="f-message" placeholder="期待什麼、或有什麼需求都可以告訴我們…"></textarea>
       </div>
       <div class="form-group">
-        <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:8px;line-height:1.6;">
+        <div style="font-size:14px;color:var(--muted);margin-bottom:10px;line-height:1.7;">
           現場提供瑜珈墊 9 張，依報名順序分配。若已分配完畢，將另行通知請自備。
         </div>
-        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.88);">
-          <input type="checkbox" id="f-own-mat" style="width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:#fff;cursor:pointer;">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--fg);">
+          <input type="checkbox" id="f-own-mat" style="width:20px;height:20px;min-width:20px;margin-top:2px;accent-color:var(--accent);cursor:pointer;">
           <span>我可以自備瑜珈墊（若現場瑜珈墊已分配完畢，仍希望參加）</span>
         </label>
       </div>

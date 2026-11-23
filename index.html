@@ -720,6 +720,12 @@
         <label>平日身體時常痠痛緊張無力的部位，或期待訓練或放鬆的部位（選填）</label>
         <textarea id="f-message" placeholder="期待什麼、或有什麼需求都可以告訴我們…"></textarea>
       </div>
+      <div class="form-group">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.8);">
+          <input type="checkbox" id="f-own-mat" style="width:16px;height:16px;min-width:16px;margin-top:2px;accent-color:#fff;cursor:pointer;">
+          <span>我可以自備瑜珈墊（若現場 9 張已分配完畢，仍希望參加）</span>
+        </label>
+      </div>
       <button type="button" class="form-submit" onclick="submitForm()">送出報名 →</button>
       <p class="form-note">報名後將收到確認信，活動前三天寄送提醒通知。</p>
     </form>
@@ -812,6 +818,7 @@
     const allChecked = document.getElementById('f-session-all').checked;
     const session = allChecked ? '全部都想參加！' : (checked.length ? checked.join('、') : '未選擇');
     const message = document.getElementById('f-message').value.trim();
+    const ownMat  = document.getElementById('f-own-mat').checked ? '可自備' : '需提供';
 
     if (!name || !email) {
       alert('請填寫必填欄位（姓名與電子郵件）');
@@ -829,6 +836,7 @@
         to_email: email,
         dept:     dept || '未填寫',
         session:  session || '未選擇',
+        own_mat:  ownMat,
         message:  message || '無',
         reply_to: email,
       });
@@ -838,7 +846,7 @@
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, dept, session, message })
+        body: JSON.stringify({ name, email, dept, session, own_mat: ownMat, message })
       }).catch(() => {});
 
       // 3. 顯示成功

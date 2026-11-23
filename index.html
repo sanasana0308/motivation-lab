@@ -833,7 +833,7 @@
     btn.disabled = true;
 
     try {
-      // 1. EmailJS 寄確認信給報名者
+      /* ── EmailJS 暫時停用（測試 GAS 寄信中）──
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         to_name:  name,
         to_email: email,
@@ -843,22 +843,23 @@
         message:  message || '無',
         reply_to: email,
       });
+      ── EmailJS 結束 ── */
 
-      // 2. GAS 寫入 Google Sheets（靜默，不影響 UX）
-      fetch(GAS_URL, {
+      // GAS：寫入 Google Sheets + 寄確認信
+      await fetch(GAS_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, dept, session, own_mat: ownMat, message })
-      }).catch(() => {});
+      });
 
-      // 3. 顯示成功
+      // 顯示成功
       document.getElementById('regForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
 
     } catch (err) {
-      console.error('EmailJS error:', err);
-      alert('送出失敗，請稍後再試。\n錯誤：' + (err.text || err.message || JSON.stringify(err)));
+      console.error('送出失敗:', err);
+      alert('送出失敗，請稍後再試。');
       btn.textContent = '送出報名 →';
       btn.disabled = false;
     }
